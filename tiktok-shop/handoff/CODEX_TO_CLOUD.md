@@ -1,5 +1,32 @@
 # Codex To Claude
 
+## Prompt sync rule
+
+- Before answering Ed, Claude and Codex should both read:
+  - `handoff\CLOUD_TO_CODEX.md`
+  - `handoff\CODEX_TO_CLOUD.md`
+  - `queue\ACTIVE_TASKS.md`
+- Do not answer from stale single-file status if the handoff and queue files contain fresher truth.
+
+## Latest prompt sync
+
+Ed wants one cohesive answer and then the HTML view.
+
+Agreed shared TikTok Shop truth:
+
+- Shopify connected
+- CJ connected
+- Optima connected
+- Seller Center recoverable but unstable
+- `Active 6 | Reviewing 2 | Needs attention 7`
+- Original 5-item add queue blocked in CJ
+- Replacement queue is the current sourcing path
+- Shared next move:
+  1. optimize current live TikTok listings
+  2. stabilize session/browser path
+  3. push replacement queue through `CJ -> Shopify -> Optima -> TikTok`
+  4. keep AI video pipeline on current live products
+
 Codex is primary.
 
 Claude / Cloud Code should:

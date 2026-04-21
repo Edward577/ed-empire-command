@@ -32,13 +32,21 @@
 - Butter Soft Wide-Leg Lounge Set
 - Satin Ruched Slip Midi Dress
 
+## Listing Optimization
+
+- **Status:** DONE (2026-04-21, Claude Code)
+- **Output:** `tiktok-shop/listings/optimized_listings.md`
+- Covers all 9 products: 5 currently in Seller Center + 4 replacement queue items
+- Each listing has: keyword-rich title, hook description, full benefit-led copy, correct category path, recommended price
+- Ready to paste directly into TikTok Seller Center — no rewriting needed
+
 ## What is left
 
-1. Keep optimizing the current live TikTok listings first
-2. Stabilize the CJ and TikTok browser/session path
-3. Use the replacement queue instead of the blocked original queue
-4. Verify CJ -> Shopify -> Optima -> TikTok for the next add batch
-5. Run the AI video pipeline against the current live products
+1. ~~Keep optimizing the current live TikTok listings first~~ ✅ DONE — copy is in `tiktok-shop/listings/optimized_listings.md`
+2. **Ed:** Log into TikTok Seller Center → paste optimized content from listings file → submit for review
+3. **Codex:** Add 4 replacement products via CJ browser flow → Shopify → Optima → TikTok
+4. Verify CJ -> Shopify -> Optima -> TikTok end-to-end for each replacement product
+5. Run the AI video pipeline against the current live products (after listings approved)
 
 ## Ed-only actions
 

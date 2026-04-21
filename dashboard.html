@@ -3,849 +3,342 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ed's Empire Command Center</title>
+<title>Ed's Empire — Command Center</title>
 <style>
-  :root {
-    --bg: #0a0a0f;
-    --surface: #12121a;
-    --card: #1a1a26;
-    --border: #2a2a40;
-    --accent: #6c63ff;
-    --gold: #f5c518;
-    --green: #00e676;
-    --orange: #ff9800;
-    --red: #ff4444;
-    --text: #e8e8f0;
-    --muted: #666688;
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Segoe UI', system-ui, sans-serif;
-    min-height: 100vh;
-    padding: 24px;
-  }
-
-  /* HEADER */
-  .header {
-    text-align: center;
-    margin-bottom: 40px;
-  }
-  .header h1 {
-    font-size: 2.4rem;
-    font-weight: 800;
-    background: linear-gradient(135deg, #6c63ff, #f5c518, #00e676);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    letter-spacing: -1px;
-  }
-  .header p {
-    color: var(--muted);
-    margin-top: 6px;
-    font-size: 0.9rem;
-  }
-  .live-badge {
-    display: inline-block;
-    background: var(--green);
-    color: #000;
-    font-size: 0.7rem;
-    font-weight: 700;
-    padding: 2px 8px;
-    border-radius: 99px;
-    margin-left: 10px;
-    vertical-align: middle;
-    animation: pulse 2s infinite;
-  }
-  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.5} }
-
-  /* SUMMARY STRIP */
-  .summary {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 16px;
-    margin-bottom: 40px;
-  }
-  .stat-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 20px;
-    text-align: center;
-  }
-  .stat-card .val {
-    font-size: 2rem;
-    font-weight: 800;
-    color: var(--accent);
-  }
-  .stat-card .val.green { color: var(--green); }
-  .stat-card .val.gold  { color: var(--gold); }
-  .stat-card .label {
-    font-size: 0.75rem;
-    color: var(--muted);
-    margin-top: 4px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-  }
-
-  /* CEO DECISION BOARD */
-  .decision-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 16px;
-    margin-bottom: 40px;
-  }
-  .decision-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 20px;
-  }
-  .decision-card.keep { border-color: rgba(0,230,118,0.35); }
-  .decision-card.build { border-color: rgba(255,152,0,0.35); }
-  .decision-card.support { border-color: rgba(108,99,255,0.35); }
-  .decision-card.cut { border-color: rgba(255,68,68,0.35); }
-  .decision-card h3 {
-    font-size: 0.88rem;
-    font-weight: 700;
-    margin-bottom: 12px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-  }
-  .decision-card.keep h3 { color: var(--green); }
-  .decision-card.build h3 { color: var(--orange); }
-  .decision-card.support h3 { color: var(--accent); }
-  .decision-card.cut h3 { color: var(--red); }
-  .decision-card p {
-    font-size: 0.76rem;
-    color: var(--muted);
-    margin-bottom: 12px;
-    line-height: 1.5;
-  }
-  .decision-list {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  .decision-list li {
-    padding: 10px 12px;
-    border-radius: 10px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    font-size: 0.78rem;
-    line-height: 1.45;
-  }
-  .decision-list strong {
-    display: block;
-    color: var(--text);
-    margin-bottom: 3px;
-  }
-  .decision-note {
-    font-size: 0.72rem;
-    color: var(--muted);
-    margin-top: 12px;
-  }
-
-  /* MANUAL ACTIONS */
-  .manual-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
-    margin-bottom: 40px;
-  }
-  .manual-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 20px;
-  }
-  .manual-card h3 {
-    font-size: 0.88rem;
-    font-weight: 700;
-    color: var(--gold);
-    margin-bottom: 12px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-  }
-  .manual-card ul {
-    list-style: none;
-    display: grid;
-    gap: 10px;
-  }
-  .manual-card li {
-    padding: 10px 12px;
-    border-radius: 10px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    font-size: 0.78rem;
-    line-height: 1.45;
-  }
-  .manual-card li strong {
-    color: var(--text);
-  }
-  .callout {
-    margin-bottom: 40px;
-    background: linear-gradient(135deg, #151523, #17172b);
-    border: 1px solid rgba(108,99,255,0.32);
-    border-radius: 14px;
-    padding: 20px 22px;
-  }
-  .callout h3 {
-    font-size: 0.92rem;
-    color: var(--accent);
-    margin-bottom: 8px;
-    text-transform: uppercase;
-    letter-spacing: 0.6px;
-  }
-  .callout p {
-    font-size: 0.82rem;
-    color: var(--text);
-    line-height: 1.6;
-  }
-
-  /* TIMELINE */
-  .section-title {
-    font-size: 1rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    color: var(--muted);
-    margin-bottom: 16px;
-  }
-
-  /* PROJECT GRID */
-  .projects {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 20px;
-    margin-bottom: 40px;
-  }
-  .project-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 20px;
-    position: relative;
-    overflow: hidden;
-    transition: border-color 0.2s, transform 0.2s;
-  }
-  .project-card:hover {
-    border-color: var(--accent);
-    transform: translateY(-2px);
-  }
-  .project-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 3px;
-  }
-  .card-live::before   { background: var(--green); }
-  .card-ready::before  { background: var(--gold); }
-  .card-build::before  { background: var(--orange); }
-  .card-concept::before{ background: var(--red); }
-
-  .card-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 12px;
-  }
-  .card-title { font-size: 1rem; font-weight: 700; }
-  .card-agent { font-size: 0.75rem; color: var(--muted); margin-top: 2px; }
-  .status-badge {
-    font-size: 0.65rem;
-    font-weight: 700;
-    padding: 3px 9px;
-    border-radius: 99px;
-    white-space: nowrap;
-  }
-  .badge-live    { background: rgba(0,230,118,0.15); color: var(--green); border: 1px solid var(--green); }
-  .badge-ready   { background: rgba(245,197,24,0.15); color: var(--gold); border: 1px solid var(--gold); }
-  .badge-build   { background: rgba(255,152,0,0.15); color: var(--orange); border: 1px solid var(--orange); }
-  .badge-concept { background: rgba(255,68,68,0.15); color: var(--red); border: 1px solid var(--red); }
-
-  /* PROGRESS BAR */
-  .progress-wrap {
-    margin: 14px 0 6px;
-  }
-  .progress-label {
-    display: flex;
-    justify-content: space-between;
-    font-size: 0.72rem;
-    color: var(--muted);
-    margin-bottom: 6px;
-  }
-  .progress-bar {
-    height: 6px;
-    background: var(--border);
-    border-radius: 99px;
-    overflow: hidden;
-  }
-  .progress-fill {
-    height: 100%;
-    border-radius: 99px;
-    transition: width 1s ease;
-  }
-  .fill-green  { background: var(--green); }
-  .fill-gold   { background: var(--gold); }
-  .fill-orange { background: var(--orange); }
-  .fill-red    { background: var(--red); }
-
-  .card-meta {
-    display: flex;
-    gap: 12px;
-    margin-top: 14px;
-    flex-wrap: wrap;
-  }
-  .meta-item {
-    font-size: 0.72rem;
-    color: var(--muted);
-  }
-  .meta-item span { color: var(--text); font-weight: 600; }
-
-  /* PRIORITY STACK */
-  .priority-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-    margin-bottom: 40px;
-  }
-  .week-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 20px;
-  }
-  .week-card h3 {
-    font-size: 0.85rem;
-    font-weight: 700;
-    color: var(--accent);
-    margin-bottom: 14px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-  }
-  .week-card ul { list-style: none; }
-  .week-card li {
-    font-size: 0.8rem;
-    color: var(--text);
-    padding: 6px 0;
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    gap: 8px;
-    align-items: flex-start;
-  }
-  .week-card li:last-child { border-bottom: none; }
-  .week-card li .num {
-    color: var(--accent);
-    font-weight: 700;
-    min-width: 16px;
-  }
-
-  /* REVENUE CHART */
-  .revenue-section {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 24px;
-    margin-bottom: 40px;
-  }
-  .revenue-bars {
-    display: flex;
-    gap: 24px;
-    align-items: flex-end;
-    height: 140px;
-    margin-top: 20px;
-    padding-top: 10px;
-  }
-  .rev-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 8px; }
-  .rev-bar-wrap { width: 100%; display: flex; gap: 6px; align-items: flex-end; height: 100px; }
-  .rev-bar {
-    flex: 1;
-    border-radius: 6px 6px 0 0;
-    min-height: 4px;
-    transition: height 1s ease;
-  }
-  .bar-cons { background: linear-gradient(180deg, #6c63ff88, #6c63ff33); }
-  .bar-opt  { background: linear-gradient(180deg, #00e676, #00e67633); }
-  .rev-label { font-size: 0.7rem; color: var(--muted); text-align: center; }
-  .rev-legend { display: flex; gap: 16px; margin-top: 16px; }
-  .rev-legend-item { display: flex; align-items: center; gap: 6px; font-size: 0.72rem; color: var(--muted); }
-  .legend-dot { width: 10px; height: 10px; border-radius: 3px; }
-
-  /* AGENT MAP */
-  .agent-map {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 24px;
-    margin-bottom: 40px;
-  }
-  .agent-flow {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0;
-    flex-wrap: wrap;
-    margin-top: 20px;
-  }
-  .agent-node {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 10px 16px;
-    text-align: center;
-    min-width: 100px;
-  }
-  .agent-node.hub {
-    background: linear-gradient(135deg, #1a1a40, #2a2a60);
-    border-color: var(--accent);
-    padding: 14px 22px;
-  }
-  .agent-node .aname { font-size: 0.8rem; font-weight: 700; }
-  .agent-node .arole { font-size: 0.65rem; color: var(--muted); margin-top: 2px; }
-  .arrow {
-    color: var(--border);
-    font-size: 1.2rem;
-    padding: 0 4px;
-  }
-  .agent-group {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    align-items: center;
-  }
-  .connector {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-  }
-
-  /* FOOTER */
-  .footer {
-    text-align: center;
-    color: var(--muted);
-    font-size: 0.72rem;
-    padding-top: 20px;
-    border-top: 1px solid var(--border);
-  }
-  .footer a { color: var(--accent); text-decoration: none; }
-
-  @media (max-width: 768px) {
-    .summary { grid-template-columns: repeat(2,1fr); }
-    .decision-grid { grid-template-columns: 1fr; }
-    .manual-grid { grid-template-columns: 1fr; }
-    .priority-grid { grid-template-columns: 1fr; }
-    .header h1 { font-size: 1.6rem; }
-  }
+:root{--bg:#0a0a0f;--surface:#111118;--card:#16161f;--border:#252535;--accent:#6c63ff;--gold:#f5c518;--green:#00e676;--orange:#ff9800;--red:#ff4444;--teal:#16c8c8;--text:#e8e8f0;--muted:#5a5a7a;--r:14px;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif;min-height:100vh;padding:28px 24px;}
+.tabs{display:flex;gap:8px;margin-bottom:28px;flex-wrap:wrap;}
+.tab{padding:9px 20px;border-radius:99px;border:1px solid var(--border);background:var(--card);color:var(--muted);font-size:.82rem;font-weight:600;cursor:pointer;transition:all .2s;}
+.tab.active,.tab:hover{background:var(--accent);color:#fff;border-color:var(--accent);}
+.section{display:none;}.section.active{display:block;}
+.header{text-align:center;margin-bottom:28px;}
+.header h1{font-size:2.2rem;font-weight:900;background:linear-gradient(135deg,#6c63ff,#f5c518,#00e676);-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:-1px;}
+.header p{color:var(--muted);margin-top:6px;font-size:.85rem;}
+.collab{display:inline-flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--border);border-radius:99px;padding:6px 16px;margin-top:10px;font-size:.75rem;color:var(--muted);}
+.dot{width:8px;height:8px;border-radius:50%;animation:pulse 2s infinite;}
+.cd{background:var(--accent);}.xd{background:var(--gold);}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.repo-strip{background:linear-gradient(135deg,rgba(108,99,255,.1),rgba(0,230,118,.05));border:1px solid rgba(108,99,255,.25);border-radius:var(--r);padding:14px 20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:24px;}
+.repo-strip b{font-size:.82rem;}
+.repo-strip a{color:var(--accent);text-decoration:none;font-size:.75rem;}
+.repo-strip span{font-size:.72rem;color:var(--muted);}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px;}
+.stat{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:18px;text-align:center;}
+.stat .v{font-size:1.9rem;font-weight:800;}.stat .l{font-size:.68rem;color:var(--muted);margin-top:3px;text-transform:uppercase;letter-spacing:.5px;}
+.g{color:var(--green);}.go{color:var(--gold);}.p{color:var(--accent);}
+.h2{font-size:.76rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:12px;margin-top:24px;}
+.projects{display:grid;grid-template-columns:repeat(auto-fill,minmax(305px,1fr));gap:16px;}
+.pc{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:18px;position:relative;overflow:hidden;transition:transform .2s,border-color .2s;}
+.pc:hover{transform:translateY(-3px);border-color:var(--accent);}
+.pc::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;}
+.live::before{background:var(--green);}.ready::before{background:var(--gold);}.build::before{background:var(--orange);}.concept::before{background:var(--red);}
+.pt{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;}
+.pn{font-size:.93rem;font-weight:700;}.pa{font-size:.68rem;color:var(--muted);margin-top:2px;}
+.badge{font-size:.6rem;font-weight:700;padding:3px 8px;border-radius:99px;white-space:nowrap;}
+.bl{background:rgba(0,230,118,.1);color:var(--green);border:1px solid var(--green);}
+.br{background:rgba(245,197,24,.1);color:var(--gold);border:1px solid var(--gold);}
+.bb{background:rgba(255,152,0,.1);color:var(--orange);border:1px solid var(--orange);}
+.bc{background:rgba(255,68,68,.1);color:var(--red);border:1px solid var(--red);}
+.bar-w{margin:10px 0 4px;}.bar-l{display:flex;justify-content:space-between;font-size:.66rem;color:var(--muted);margin-bottom:4px;}
+.bar{height:5px;background:var(--border);border-radius:99px;overflow:hidden;}
+.fi{height:100%;border-radius:99px;}
+.fg{background:var(--green);}.fgo{background:var(--gold);}.fo{background:var(--orange);}.fr{background:var(--red);}
+.pm{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px;font-size:.66rem;color:var(--muted);}
+.pm b{color:var(--text);}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+.panel{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:20px;}
+.panel h3{font-size:.95rem;font-weight:700;margin-bottom:4px;}
+.panel .sub{font-size:.72rem;color:var(--muted);margin-bottom:14px;}
+.track{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px;margin-bottom:10px;}
+.th{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:7px;}
+.th h4{font-size:.85rem;font-weight:700;}
+.ttag{padding:3px 8px;border-radius:99px;font-size:.65rem;font-weight:700;}
+.tf{background:rgba(0,230,118,.1);color:var(--green);}.tm{background:rgba(108,99,255,.1);color:var(--accent);}.ts{background:rgba(255,68,68,.1);color:var(--red);}
+.track p{font-size:.75rem;color:var(--muted);margin-top:5px;}
+.kgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+.kc{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px;}
+.kv{font-size:1.5rem;font-weight:800;color:var(--accent);}.kl{font-size:.65rem;color:var(--muted);margin-top:2px;}
+.tl{position:relative;padding-left:18px;}
+.tl::before{content:'';position:absolute;left:5px;top:8px;bottom:8px;width:2px;background:linear-gradient(180deg,var(--accent),rgba(0,230,118,.3));}
+.ti{position:relative;padding-left:18px;margin-bottom:14px;}
+.ti::before{content:'';position:absolute;left:-1px;top:5px;width:12px;height:12px;border-radius:50%;background:var(--bg);border:3px solid var(--accent);}
+.ti h4{font-size:.85rem;font-weight:700;color:var(--accent);}
+.ti p{font-size:.75rem;color:var(--muted);margin-top:2px;}
+.phase{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px;margin-bottom:9px;}
+.phh{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:5px;}
+.phase h4{font-size:.85rem;font-weight:700;}.phase .d{font-size:.68rem;color:var(--gold);}
+.phase p{font-size:.75rem;color:var(--muted);}
+.role{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px;margin-bottom:9px;}
+.role h4{font-size:.85rem;font-weight:700;margin-bottom:4px;}
+.rc h4{color:var(--accent);}.rx h4{color:var(--gold);}.rg h4{color:var(--teal);}.rb h4{color:var(--orange);}
+.role p{font-size:.75rem;color:var(--muted);}
+.rev-section{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:20px;margin-bottom:18px;}
+.rev-bars{display:flex;gap:18px;align-items:flex-end;height:110px;margin-top:14px;}
+.rcol{flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;}
+.rpair{width:100%;display:flex;gap:5px;align-items:flex-end;height:80px;}
+.rb2{flex:1;border-radius:5px 5px 0 0;min-height:3px;}
+.cons{background:linear-gradient(180deg,var(--accent),rgba(108,99,255,.15));}.opt{background:linear-gradient(180deg,var(--green),rgba(0,230,118,.15));}
+.rlbl{font-size:.65rem;color:var(--muted);text-align:center;}
+.rev-leg{display:flex;gap:14px;margin-top:10px;}
+.rev-leg span{display:flex;align-items:center;gap:5px;font-size:.68rem;color:var(--muted);}
+.ldot{width:9px;height:9px;border-radius:3px;}
+.pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+.pw{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:18px;}
+.pw h3{font-size:.78rem;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;}
+.pw li{font-size:.75rem;padding:5px 0;border-bottom:1px solid var(--border);display:flex;gap:7px;list-style:none;}
+.pw li:last-child{border:none;}.n{color:var(--accent);font-weight:700;min-width:14px;}
+.amap{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:20px;}
+.ami{display:flex;gap:24px;flex-wrap:wrap;justify-content:center;align-items:center;margin-top:14px;}
+.an{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:9px 14px;text-align:center;min-width:90px;}
+.an.hub{background:linear-gradient(135deg,#1a1a40,#252550);border-color:var(--accent);}
+.an .nm{font-size:.78rem;font-weight:700;}.an .rl{font-size:.6rem;color:var(--muted);margin-top:2px;}
+.agr{display:grid;grid-template-columns:1fr 1fr;gap:7px;}
+.arr{color:var(--border);font-size:1.3rem;padding:0 4px;}
+.ins{background:rgba(108,99,255,.07);border:1px solid rgba(108,99,255,.2);border-radius:10px;padding:12px;margin-top:14px;font-size:.75rem;color:var(--muted);}
+.ins b{color:var(--text);}
+.disc-row{display:flex;gap:9px;align-items:center;padding:9px;background:var(--surface);border:1px solid var(--border);border-radius:9px;margin-bottom:7px;}
+.disc-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.disc-row b{font-size:.8rem;}.disc-row em{font-size:.68rem;color:var(--muted);font-style:normal;}
+@media(max-width:768px){.stats{grid-template-columns:repeat(2,1fr);}.two{grid-template-columns:1fr;}.pgrid{grid-template-columns:1fr;}.kgrid{grid-template-columns:repeat(2,1fr);}}
 </style>
 </head>
 <body>
 
 <div class="header">
-  <h1>Ed's Empire Command Center <span class="live-badge">LIVE</span></h1>
-  <p>10 Projects · 9 Agents · Claude + Codex · github.com/Edward577/ed-empire-command</p>
-</div>
-
-<!-- SUMMARY STRIP -->
-<div class="summary">
-  <div class="stat-card">
-    <div class="val green">2</div>
-    <div class="label">Live Products</div>
-  </div>
-  <div class="stat-card">
-    <div class="val gold">$97</div>
-    <div class="label">Current Price Point</div>
-  </div>
-  <div class="stat-card">
-    <div class="val">10</div>
-    <div class="label">Active Projects</div>
-  </div>
-  <div class="stat-card">
-    <div class="val gold">3</div>
-    <div class="label">Push Now</div>
+  <h1>Ed's Empire Command Center</h1>
+  <p>10 Projects · 9 Agents · Built together by Claude Code + Codex</p>
+  <div class="collab">
+    <span class="dot cd"></span>Claude Code &nbsp;+&nbsp;<span class="dot xd"></span>Codex &nbsp;·&nbsp; One Repo, One Dashboard
   </div>
 </div>
 
-<div class="callout">
-  <h3>What You Need To Know First</h3>
-  <p>
-    This dashboard is the shared truth for both Claude and Codex. The fastest money is not spread across all 10 lanes.
-    The best move is to push 3 lanes hard now, keep 4 in build mode, keep 2 as support or R&amp;D, and merge or cut the weakest overlap.
-  </p>
+<div class="repo-strip">
+  <b>📁 Shared Repo — Both agents read & write here</b>
+  <span>Local: C:\Users\oeroh\OneDrive\Documents\Claude\ed-empire-command\ &nbsp;|&nbsp; <a href="https://github.com/Edward577/ed-empire-command" target="_blank">github.com/Edward577/ed-empire-command ↗</a></span>
 </div>
 
-<div class="section-title">CEO Decision Board</div>
-<div class="decision-grid">
-  <div class="decision-card keep">
-    <h3>Push Now</h3>
-    <p>These have the fastest path to real money and deserve most of the next 30 days.</p>
-    <ul class="decision-list">
-      <li><strong>Prop Firm Rinse</strong>Already live. Best immediate money lever once auth blockers are fixed.</li>
-      <li><strong>TikTok Shop (Women's Fashion)</strong>1-2 weeks to first orders after Seller Center login, videos, and catalog approval.</li>
-      <li><strong>AI Wholesaler Vault</strong>Almost done. Can earn within days once Ed logs into the right Gumroad account and publishes.</li>
-    </ul>
-  </div>
+<div class="tabs">
+  <div class="tab active" onclick="show('ov',this)">Overview</div>
+  <div class="tab" onclick="show('proj',this)">All 10 Projects</div>
+  <div class="tab" onclick="show('tracks',this)">Revenue Tracks</div>
+  <div class="tab" onclick="show('plan',this)">30-Day Plan</div>
+  <div class="tab" onclick="show('money',this)">Timeline & $</div>
+  <div class="tab" onclick="show('agents',this)">Agent Map</div>
+</div>
 
-  <div class="decision-card build">
-    <h3>Build Next</h3>
-    <p>Keep these alive, but only after the first three are moving.</p>
-    <ul class="decision-list">
-      <li><strong>Wholesale Automation</strong>Keep only if the 2 bugs are fixed this month. Otherwise pause.</li>
-      <li><strong>Lead List Scraper</strong>Strong medium-term offer if packaged and tested on a real list.</li>
-      <li><strong>Claude Automation Service</strong>Good money only if you do outreach and close a beta client.</li>
-    </ul>
+<!-- OVERVIEW -->
+<div id="ov" class="section active">
+  <div class="stats">
+    <div class="stat"><div class="v g">2</div><div class="l">Live Products</div></div>
+    <div class="stat"><div class="v go">$97</div><div class="l">Best Price Point</div></div>
+    <div class="stat"><div class="v p">10</div><div class="l">Active Projects</div></div>
+    <div class="stat"><div class="v go">$10K+</div><div class="l">90-Day Potential</div></div>
   </div>
-
-  <div class="decision-card support">
-    <h3>Support / R&amp;D</h3>
-    <p>These help the system, but they should not steal focus from near-term revenue.</p>
-    <ul class="decision-list">
-      <li><strong>Content Engine</strong>Keep as infrastructure that feeds John, TikTok Shop, and future content lanes.</li>
-      <li><strong>Trading Bot</strong>Keep as research only until 30-day paper trading proves it.</li>
-    </ul>
+  <div class="h2">Revenue Projection</div>
+  <div class="rev-section">
+    <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+      <div><b style="font-size:.95rem;">90-Day Runway</b><div style="font-size:.72rem;color:var(--muted);margin-top:2px;">Conservative vs Optimistic — if posting stays consistent</div></div>
+      <div class="rev-leg"><span><div class="ldot" style="background:var(--accent)"></div>Conservative</span><span><div class="ldot" style="background:var(--green)"></div>Optimistic</span></div>
+    </div>
+    <div class="rev-bars">
+      <div class="rcol"><div class="rpair"><div class="rb2 cons" style="height:9%"></div><div class="rb2 opt" style="height:30%"></div></div><div class="rlbl">30 days<br>$200–$3K</div></div>
+      <div class="rcol"><div class="rpair"><div class="rb2 cons" style="height:30%"></div><div class="rb2 opt" style="height:55%"></div></div><div class="rlbl">60 days<br>$1K–$10K</div></div>
+      <div class="rcol"><div class="rpair"><div class="rb2 cons" style="height:60%"></div><div class="rb2 opt" style="height:100%"></div></div><div class="rlbl">90 days<br>$2K–$20K</div></div>
+    </div>
   </div>
+  <div class="h2">Fastest Money — Do These First</div>
+  <div class="pgrid">
+    <div class="pw"><h3>Week 1 — Cash Now</h3><ul>
+      <li><span class="n">1</span>Fix X + Instagram auth → John posts daily</li>
+      <li><span class="n">2</span>List AI Vault on Peter's Gumroad (zero build)</li>
+      <li><span class="n">3</span>Sign up Apex affiliate → $100/referral in every bio</li>
+    </ul></div>
+    <div class="pw"><h3>Week 2 — Build Momentum</h3><ul>
+      <li><span class="n">4</span>Log into TikTok Seller Center once → shop goes live</li>
+      <li><span class="n">5</span>Fix Andrew's 2 pipeline bugs</li>
+      <li><span class="n">6</span>Test Matthew's Lead List Scraper end-to-end</li>
+    </ul></div>
+    <div class="pw"><h3>Month 2 — Scale</h3><ul>
+      <li><span class="n">7</span>Luke closes first $997 service client</li>
+      <li><span class="n">8</span>Thomas finishes 30-day paper trade</li>
+      <li><span class="n">9</span>Simon defines AI Video product scope</li>
+      <li><span class="n">10</span>Zara launches TikTok Shop Clothes</li>
+    </ul></div>
+  </div>
+  <div class="ins"><b>Codex's key insight:</b> Don't try to monetize all 10 at once. One lane, one conversion loop, one scoreboard. <b>Prop Firm Rinse + TikTok Shop are the primary lanes right now.</b></div>
+</div>
 
-  <div class="decision-card cut">
-    <h3>Merge / Cut</h3>
-    <p>These should not be treated as top-level businesses right now.</p>
-    <ul class="decision-list">
-      <li><strong>AI Video TikTok Shark</strong>Merge into the main content engine unless it proves unique traction fast.</li>
-      <li><strong>TikTok Shop Clothes (Zara)</strong>Fold into the existing women's fashion TikTok Shop lane instead of running a duplicate lane.</li>
-    </ul>
-    <div class="decision-note">Rule: if a lane overlaps heavily and has no proof yet, merge it instead of funding more complexity.</div>
+<!-- ALL 10 PROJECTS -->
+<div id="proj" class="section">
+  <div class="h2">All 10 Projects — Live Status</div>
+  <div class="projects">
+    <div class="pc live"><div class="pt"><div><div class="pn">Prop Firm Rinse</div><div class="pa">John + Daniel</div></div><span class="badge bl">LIVE</span></div><div class="bar-w"><div class="bar-l"><span>% ready</span><span>95%</span></div><div class="bar"><div class="fi fg" style="width:95%"></div></div></div><div class="pm"><span>Price: <b>$97</b></span><span>Platform: <b>Gumroad</b></span><span>Status: <b>Already earning</b></span></div></div>
+    <div class="pc live"><div class="pt"><div><div class="pn">TikTok Shop (Women's Fashion)</div><div class="pa">TikTok Shop Agent</div></div><span class="badge bl">LIVE</span></div><div class="bar-w"><div class="bar-l"><span>% ready</span><span>70%</span></div><div class="bar"><div class="fi fg" style="width:70%"></div></div></div><div class="pm"><span>Margin: <b>$15-40/order</b></span><span>Blocker: <b>Seller Center login</b></span></div></div>
+    <div class="pc ready"><div class="pt"><div><div class="pn">AI Wholesaler Vault</div><div class="pa">Peter</div></div><span class="badge br">PRODUCT READY</span></div><div class="bar-w"><div class="bar-l"><span>% ready</span><span>80%</span></div><div class="bar"><div class="fi fgo" style="width:80%"></div></div></div><div class="pm"><span>Price: <b>$47-$197</b></span><span>Blocker: <b>Ed lists on Gumroad</b></span></div></div>
+    <div class="pc build"><div class="pt"><div><div class="pn">Wholesale Automation</div><div class="pa">Andrew</div></div><span class="badge bb">2 BUGS</span></div><div class="bar-w"><div class="bar-l"><span>% ready</span><span>60%</span></div><div class="bar"><div class="fi fo" style="width:60%"></div></div></div><div class="pm"><span>Price: <b>$97-$497/mo</b></span><span>Est: <b>3-4 weeks</b></span></div></div>
+    <div class="pc build"><div class="pt"><div><div class="pn">Lead List Scraper</div><div class="pa">Matthew</div></div><span class="badge bb">BUILT</span></div><div class="bar-w"><div class="bar-l"><span>% ready</span><span>65%</span></div><div class="bar"><div class="fi fo" style="width:65%"></div></div></div><div class="pm"><span>Price: <b>$497</b></span><span>Est: <b>3-4 weeks</b></span></div></div>
+    <div class="pc build"><div class="pt"><div><div class="pn">Claude Automation Service</div><div class="pa">Luke</div></div><span class="badge bb">BUILT</span></div><div class="bar-w"><div class="bar-l"><span>% ready</span><span>60%</span></div><div class="bar"><div class="fi fo" style="width:60%"></div></div></div><div class="pm"><span>Price: <b>$997</b></span><span>Model: <b>Done-for-you</b></span></div></div>
+    <div class="pc build"><div class="pt"><div><div class="pn">Trading Bot</div><div class="pa">Thomas</div></div><span class="badge bb">PAPER TRADE</span></div><div class="bar-w"><div class="bar-l"><span>% ready</span><span>50%</span></div><div class="bar"><div class="fi fo" style="width:50%"></div></div></div><div class="pm"><span>Future: <b>$97-$297/mo signals</b></span><span>Est: <b>6-8 weeks</b></span></div></div>
+    <div class="pc build"><div class="pt"><div><div class="pn">Content Engine</div><div class="pa">Philip</div></div><span class="badge bb">INFRA</span></div><div class="bar-w"><div class="bar-l"><span>% ready</span><span>55%</span></div><div class="bar"><div class="fi fo" style="width:55%"></div></div></div><div class="pm"><span>Role: <b>Feeds all other lanes</b></span></div></div>
+    <div class="pc concept"><div class="pt"><div><div class="pn">AI Video TikTok Shark</div><div class="pa">Simon</div></div><span class="badge bc">CONCEPT</span></div><div class="bar-w"><div class="bar-l"><span>% ready</span><span>20%</span></div><div class="bar"><div class="fi fr" style="width:20%"></div></div></div><div class="pm"><span>Est: <b>8-12 weeks</b></span></div></div>
+    <div class="pc concept"><div class="pt"><div><div class="pn">TikTok Shop Clothes</div><div class="pa">Zara</div></div><span class="badge bc">SETUP PENDING</span></div><div class="bar-w"><div class="bar-l"><span>% ready</span><span>15%</span></div><div class="bar"><div class="fi fr" style="width:15%"></div></div></div><div class="pm"><span>Margin: <b>$10-30/order</b></span><span>Est: <b>8-12 weeks</b></span></div></div>
   </div>
 </div>
 
-<div class="section-title">Ed-Only Manual Actions</div>
-<div class="manual-grid">
-  <div class="manual-card">
-    <h3>Do These This Week</h3>
-    <ul>
-      <li><strong>TikTok Shop:</strong> Manually re-login to TikTok Studio / Seller Center so Codex can submit the catalog and sync products.</li>
-      <li><strong>Peter's Vault:</strong> Log into the correct Gumroad account and publish the finished product.</li>
-      <li><strong>John lane:</strong> Re-auth X, Instagram, and Blotato so the live content machine actually posts daily.</li>
-      <li><strong>Apex affiliate:</strong> Sign up and add the link into John's distribution flow.</li>
-    </ul>
-  </div>
-  <div class="manual-card">
-    <h3>Time To First Profit</h3>
-    <ul>
-      <li><strong>Now to 30 days:</strong> Prop Firm Rinse</li>
-      <li><strong>Days to 1 week:</strong> AI Wholesaler Vault after listing</li>
-      <li><strong>1-2 weeks:</strong> TikTok Shop if approval and videos are finished</li>
-      <li><strong>3-6 weeks:</strong> Wholesale Automation, Lead List Scraper, Claude Automation Service</li>
-      <li><strong>6-12+ weeks:</strong> Trading Bot, AI Video TikTok Shark, Zara lane</li>
-    </ul>
-  </div>
-</div>
-
-<!-- PROJECTS -->
-<div class="section-title">All 10 Projects</div>
-<div class="projects">
-
-  <div class="project-card card-live">
-    <div class="card-top">
-      <div>
-        <div class="card-title">Prop Firm Rinse</div>
-        <div class="card-agent">Agent: John + Daniel</div>
+<!-- REVENUE TRACKS (CODEX) -->
+<div id="tracks" class="section">
+  <div class="two">
+    <div class="panel">
+      <h3>Revenue Track Rankings</h3>
+      <p class="sub">From Codex: don't monetize all agents at once — make one business work first.</p>
+      <div class="track"><div class="th"><h4>Ecommerce (TikTok Shop + Gumroad)</h4><span class="ttag tf">Primary</span></div><div class="bar"><div class="fi fg" style="width:65%"></div></div><p><b>65% ready</b> — fastest realistic path to money. Live Shopify, live Gumroad, live CJ.</p></div>
+      <div class="track"><div class="th"><h4>Content Automation Services</h4><span class="ttag tm">2nd Wave</span></div><div class="bar"><div class="fi fo" style="width:40%"></div></div><p><b>40% ready</b> — useful once ecommerce has proof. Frame as a service after wins exist.</p></div>
+      <div class="track"><div class="th"><h4>Trading Systems</h4><span class="ttag ts">R&D Only</span></div><div class="bar"><div class="fi" style="width:35%;background:var(--accent)"></div></div><p><b>35% ready</b> — keep alive but don't let it steal focus from near-term revenue.</p></div>
+      <div class="track"><div class="th"><h4>Selling the Agent System</h4><span class="ttag ts">Later</span></div><div class="bar"><div class="fi fr" style="width:20%"></div></div><p><b>20% ready</b> — needs visible wins first. Luke's Automation Service is the bridge.</p></div>
+    </div>
+    <div class="panel">
+      <h3>Completion Snapshot</h3>
+      <p class="sub">Where every lane actually stands right now.</p>
+      <div class="kgrid">
+        <div class="kc"><div class="kv">95%</div><div class="kl">Prop Firm Rinse</div></div>
+        <div class="kc"><div class="kv">80%</div><div class="kl">AI Vault</div></div>
+        <div class="kc"><div class="kv">70%</div><div class="kl">TikTok Shop</div></div>
+        <div class="kc"><div class="kv">65%</div><div class="kl">Lead Scraper</div></div>
+        <div class="kc"><div class="kv">60%</div><div class="kl">Wholesale Auto</div></div>
+        <div class="kc"><div class="kv">60%</div><div class="kl">Claude Svc</div></div>
+        <div class="kc"><div class="kv">50%</div><div class="kl">Trading Bot</div></div>
+        <div class="kc"><div class="kv">25%</div><div class="kl">Traffic Engine</div></div>
+        <div class="kc"><div class="kv">20%</div><div class="kl">AI Video</div></div>
+        <div class="kc"><div class="kv">15%</div><div class="kl">TikTok Clothes</div></div>
       </div>
-      <span class="status-badge badge-live">LIVE</span>
-    </div>
-    <div class="progress-wrap">
-      <div class="progress-label"><span>% to monetized</span><span>95%</span></div>
-      <div class="progress-bar"><div class="progress-fill fill-green" style="width:95%"></div></div>
-    </div>
-    <div class="card-meta">
-      <div class="meta-item">Price: <span>$97</span></div>
-      <div class="meta-item">Platform: <span>Gumroad</span></div>
-      <div class="meta-item">Est: <span>Already earning</span></div>
-    </div>
-  </div>
-
-  <div class="project-card card-live">
-    <div class="card-top">
-      <div>
-        <div class="card-title">TikTok Shop (Women's Fashion)</div>
-        <div class="card-agent">Agent: TikTok Shop</div>
-      </div>
-      <span class="status-badge badge-live">LIVE</span>
-    </div>
-    <div class="progress-wrap">
-      <div class="progress-label"><span>% to monetized</span><span>70%</span></div>
-      <div class="progress-bar"><div class="progress-fill fill-green" style="width:70%"></div></div>
-    </div>
-    <div class="card-meta">
-      <div class="meta-item">Margin: <span>$15-40/order</span></div>
-      <div class="meta-item">Platform: <span>Shopify + CJ</span></div>
-      <div class="meta-item">Est: <span>1-2 weeks</span></div>
-    </div>
-  </div>
-
-  <div class="project-card card-ready">
-    <div class="card-top">
-      <div>
-        <div class="card-title">AI Wholesaler Vault</div>
-        <div class="card-agent">Agent: Peter</div>
-      </div>
-      <span class="status-badge badge-ready">PRODUCT READY</span>
-    </div>
-    <div class="progress-wrap">
-      <div class="progress-label"><span>% to monetized</span><span>80%</span></div>
-      <div class="progress-bar"><div class="progress-fill fill-gold" style="width:80%"></div></div>
-    </div>
-    <div class="card-meta">
-      <div class="meta-item">Price: <span>$47-$197</span></div>
-      <div class="meta-item">Blocker: <span>Ed logs in Gumroad</span></div>
-      <div class="meta-item">Est: <span>1 week</span></div>
-    </div>
-  </div>
-
-  <div class="project-card card-build">
-    <div class="card-top">
-      <div>
-        <div class="card-title">Wholesale Automation</div>
-        <div class="card-agent">Agent: Andrew</div>
-      </div>
-      <span class="status-badge badge-build">2 BUGS</span>
-    </div>
-    <div class="progress-wrap">
-      <div class="progress-label"><span>% to monetized</span><span>60%</span></div>
-      <div class="progress-bar"><div class="progress-fill fill-orange" style="width:60%"></div></div>
-    </div>
-    <div class="card-meta">
-      <div class="meta-item">Price: <span>$97-$497/mo</span></div>
-      <div class="meta-item">Platform: <span>SaaS / DFY</span></div>
-      <div class="meta-item">Est: <span>3-4 weeks</span></div>
-    </div>
-  </div>
-
-  <div class="project-card card-build">
-    <div class="card-top">
-      <div>
-        <div class="card-title">Lead List Scraper</div>
-        <div class="card-agent">Agent: Matthew</div>
-      </div>
-      <span class="status-badge badge-build">BUILT</span>
-    </div>
-    <div class="progress-wrap">
-      <div class="progress-label"><span>% to monetized</span><span>65%</span></div>
-      <div class="progress-bar"><div class="progress-fill fill-orange" style="width:65%"></div></div>
-    </div>
-    <div class="card-meta">
-      <div class="meta-item">Price: <span>$497</span></div>
-      <div class="meta-item">Platform: <span>Gumroad</span></div>
-      <div class="meta-item">Est: <span>3-4 weeks</span></div>
-    </div>
-  </div>
-
-  <div class="project-card card-build">
-    <div class="card-top">
-      <div>
-        <div class="card-title">Claude Automation Service</div>
-        <div class="card-agent">Agent: Luke</div>
-      </div>
-      <span class="status-badge badge-build">BUILT</span>
-    </div>
-    <div class="progress-wrap">
-      <div class="progress-label"><span>% to monetized</span><span>60%</span></div>
-      <div class="progress-bar"><div class="progress-fill fill-orange" style="width:60%"></div></div>
-    </div>
-    <div class="card-meta">
-      <div class="meta-item">Price: <span>$997</span></div>
-      <div class="meta-item">Model: <span>Done-for-you</span></div>
-      <div class="meta-item">Est: <span>4-6 weeks</span></div>
-    </div>
-  </div>
-
-  <div class="project-card card-build">
-    <div class="card-top">
-      <div>
-        <div class="card-title">Trading Bot</div>
-        <div class="card-agent">Agent: Thomas</div>
-      </div>
-      <span class="status-badge badge-build">PAPER TRADE</span>
-    </div>
-    <div class="progress-wrap">
-      <div class="progress-label"><span>% to monetized</span><span>50%</span></div>
-      <div class="progress-bar"><div class="progress-fill fill-orange" style="width:50%"></div></div>
-    </div>
-    <div class="card-meta">
-      <div class="meta-item">Model: <span>Signals sub</span></div>
-      <div class="meta-item">Price: <span>$97-$297/mo</span></div>
-      <div class="meta-item">Est: <span>6-8 weeks</span></div>
-    </div>
-  </div>
-
-  <div class="project-card card-build">
-    <div class="card-top">
-      <div>
-        <div class="card-title">Content Engine</div>
-        <div class="card-agent">Agent: Philip</div>
-      </div>
-      <span class="status-badge badge-build">INFRA</span>
-    </div>
-    <div class="progress-wrap">
-      <div class="progress-label"><span>% to monetized</span><span>55%</span></div>
-      <div class="progress-bar"><div class="progress-fill fill-orange" style="width:55%"></div></div>
-    </div>
-    <div class="card-meta">
-      <div class="meta-item">Role: <span>Feeds all lanes</span></div>
-      <div class="meta-item">Direct rev: <span>N/A</span></div>
-    </div>
-  </div>
-
-  <div class="project-card card-concept">
-    <div class="card-top">
-      <div>
-        <div class="card-title">AI Video TikTok Shark</div>
-        <div class="card-agent">Agent: Simon</div>
-      </div>
-      <span class="status-badge badge-concept">CONCEPT</span>
-    </div>
-    <div class="progress-wrap">
-      <div class="progress-label"><span>% to monetized</span><span>20%</span></div>
-      <div class="progress-bar"><div class="progress-fill fill-red" style="width:20%"></div></div>
-    </div>
-    <div class="card-meta">
-      <div class="meta-item">Model: <span>TBD</span></div>
-      <div class="meta-item">Est: <span>8-12 weeks</span></div>
-    </div>
-  </div>
-
-  <div class="project-card card-concept">
-    <div class="card-top">
-      <div>
-        <div class="card-title">TikTok Shop Clothes</div>
-        <div class="card-agent">Agent: Zara</div>
-      </div>
-      <span class="status-badge badge-concept">SETUP PENDING</span>
-    </div>
-    <div class="progress-wrap">
-      <div class="progress-label"><span>% to monetized</span><span>15%</span></div>
-      <div class="progress-bar"><div class="progress-fill fill-red" style="width:15%"></div></div>
-    </div>
-    <div class="card-meta">
-      <div class="meta-item">Margin: <span>$10-30/order</span></div>
-      <div class="meta-item">Platform: <span>CJ + TikTok native</span></div>
-      <div class="meta-item">Est: <span>8-12 weeks</span></div>
-    </div>
-  </div>
-
-</div>
-
-<!-- REVENUE PROJECTION -->
-<div class="section-title">Revenue Projection</div>
-<div class="revenue-section">
-  <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
-    <div>
-      <div style="font-size:1rem;font-weight:700;">90-Day Monetization Runway</div>
-      <div style="font-size:0.78rem;color:var(--muted);margin-top:4px;">Conservative vs Optimistic</div>
-    </div>
-    <div class="rev-legend">
-      <div class="rev-legend-item"><div class="legend-dot" style="background:#6c63ff88"></div> Conservative</div>
-      <div class="rev-legend-item"><div class="legend-dot" style="background:#00e676"></div> Optimistic</div>
-    </div>
-  </div>
-  <div class="revenue-bars">
-    <div class="rev-col">
-      <div class="rev-bar-wrap">
-        <div class="rev-bar bar-cons" style="height:8%"></div>
-        <div class="rev-bar bar-opt" style="height:30%"></div>
-      </div>
-      <div class="rev-label">30 days<br><span style="color:var(--muted)">$200–$3K</span></div>
-    </div>
-    <div class="rev-col">
-      <div class="rev-bar-wrap">
-        <div class="rev-bar bar-cons" style="height:30%"></div>
-        <div class="rev-bar bar-opt" style="height:50%"></div>
-      </div>
-      <div class="rev-label">60 days<br><span style="color:var(--muted)">$1K–$10K</span></div>
-    </div>
-    <div class="rev-col">
-      <div class="rev-bar-wrap">
-        <div class="rev-bar bar-cons" style="height:60%"></div>
-        <div class="rev-bar bar-opt" style="height:100%"></div>
-      </div>
-      <div class="rev-label">90 days<br><span style="color:var(--muted)">$2K–$20K</span></div>
+      <div class="ins" style="margin-top:12px;"><b>Biggest gap:</b> Assets and agents exist. Missing piece = one disciplined conversion loop that runs daily without stopping.</div>
     </div>
   </div>
 </div>
 
-<!-- PRIORITY STACK -->
-<div class="section-title">Priority Stack — What to Do First</div>
-<div class="priority-grid">
-  <div class="week-card">
-    <h3>Week 1 — Fastest Money</h3>
-    <ul>
-      <li><span class="num">1</span>Fix X + Instagram auth → post John daily</li>
-      <li><span class="num">2</span>List AI Wholesaler Vault on Peter's Gumroad</li>
-      <li><span class="num">3</span>Sign up Apex affiliate ($100/referral)</li>
-    </ul>
-  </div>
-  <div class="week-card">
-    <h3>Week 2 — Build Momentum</h3>
-    <ul>
-      <li><span class="num">4</span>TikTok Shop merchandising + submit catalog</li>
-      <li><span class="num">5</span>Fix Andrew's 2 pipeline bugs</li>
-      <li><span class="num">6</span>Test Matthew's Lead List Scraper end-to-end</li>
-    </ul>
-  </div>
-  <div class="week-card">
-    <h3>Month 2 — Scale Up</h3>
-    <ul>
-      <li><span class="num">7</span>Luke closes first $997 service client</li>
-      <li><span class="num">8</span>Thomas completes 30-day paper trade</li>
-      <li><span class="num">9</span>Simon defines AI Video product</li>
-      <li><span class="num">10</span>Zara launches TikTok Shop Clothes</li>
-    </ul>
+<!-- 30-DAY PLAN -->
+<div id="plan" class="section">
+  <div class="two">
+    <div class="panel">
+      <h3>30-Day Execution Path</h3>
+      <p class="sub">One lane. One flagship product. One scoreboard. No splitting focus.</p>
+      <div class="phase"><div class="phh"><h4>Phase 1 — Focus & Cleanup</h4><span class="d">Days 1-4</span></div><p>Fix X + Instagram auth. List Peter's Vault. Sign up Apex affiliate. Log into TikTok Seller Center.</p></div>
+      <div class="phase"><div class="phh"><h4>Phase 2 — Content Engine Live</h4><span class="d">Days 3-10</span></div><p>Post daily: 5 TikToks, 4 X tweets, 1 IG Reel. Daniel's 5-hour cycle + 44 queued tweets ready.</p></div>
+      <div class="phase"><div class="phh"><h4>Phase 3 — Conversion Loop</h4><span class="d">Days 7-14</span></div><p>Tighten Gumroad copy. Add Apex affiliate link to every video. TikTok Shop 5+ products live.</p></div>
+      <div class="phase"><div class="phh"><h4>Phase 4 — Add More Lanes</h4><span class="d">Days 14-21</span></div><p>Fix Andrew's 2 bugs. Matthew's Scraper listed at $497. Luke sends 20 DMs/day.</p></div>
+      <div class="phase"><div class="phh"><h4>Phase 5 — Scale or Kill</h4><span class="d">Day 21+</span></div><p>Double what converted. Thomas starts 30-day paper trade. Simon scopes AI Video product.</p></div>
+    </div>
+    <div class="panel">
+      <h3>TikTok Shop Live Status (Codex verified)</h3>
+      <p class="sub">From Codex's live Seller Center investigation — 2026-04-21.</p>
+      <div style="padding:10px;background:rgba(255,68,68,.07);border:1px solid rgba(255,68,68,.25);border-radius:9px;font-size:.75rem;margin-bottom:12px;">
+        <b style="color:var(--red);">🔴 Session Expired</b><br><span style="color:var(--muted);">Ed must log into TikTok Seller Center once — then Codex handles everything automatically.</span>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px;">
+        <div class="kc"><div class="kv" style="color:var(--green)">6</div><div class="kl">Active</div></div>
+        <div class="kc"><div class="kv" style="color:var(--gold)">2</div><div class="kl">Reviewing</div></div>
+        <div class="kc"><div class="kv" style="color:var(--red)">7</div><div class="kl">Needs Attention</div></div>
+      </div>
+      <div style="font-size:.72rem;color:var(--muted);margin-bottom:7px;"><b style="color:var(--text);">Replacement queue (sourceable from CJ):</b></div>
+      <ul style="font-size:.72rem;color:var(--muted);padding-left:14px;line-height:1.9;">
+        <li>Linen Blend Midi Wrap Dress</li>
+        <li>Floral Chiffon Tiered Maxi Dress</li>
+        <li>Butter Soft Wide-Leg Lounge Set</li>
+        <li>Satin Ruched Slip Midi Dress</li>
+      </ul>
+      <div class="ins" style="margin-top:10px;"><b>Original 5 products blocked</b> — not found in CJ. Codex switched to these 4 replacements automatically.</div>
+    </div>
   </div>
 </div>
 
-<!-- AGENT MAP -->
-<div class="section-title">Agent Map</div>
-<div class="agent-map">
-  <div style="display:flex;gap:32px;flex-wrap:wrap;justify-content:center;align-items:center;">
-    <div style="text-align:center;">
-      <div style="font-size:0.72rem;color:var(--muted);margin-bottom:8px;">COORDINATION</div>
-      <div style="display:flex;flex-direction:column;gap:8px;">
-        <div class="agent-node hub"><div class="aname" style="color:var(--accent)">Claude Code</div><div class="arole">Plans + Coordinates</div></div>
-        <div class="agent-node hub"><div class="aname" style="color:var(--gold)">Codex</div><div class="arole">Executes Code</div></div>
+<!-- TIMELINE & MONEY -->
+<div id="money" class="section">
+  <div class="two">
+    <div class="panel">
+      <h3>Monetization Timeline</h3>
+      <p class="sub">Realistic windows — consistent posting required on primary lanes.</p>
+      <div class="tl">
+        <div class="ti"><h4>Right Now</h4><p>Prop Firm Rinse LIVE at $97. Every TikTok post is a sales opportunity. Already earning.</p></div>
+        <div class="ti"><h4>7–14 Days</h4><p>Apex affiliate live. Peter's Vault listed. Daily posting running. $200–$800 possible.</p></div>
+        <div class="ti"><h4>2–6 Weeks</h4><p>TikTok Shop orders flowing. X + IG posting daily. Repeatable loop. $1K–$3K/mo.</p></div>
+        <div class="ti"><h4>6–12 Weeks</h4><p>Luke lands service clients. Matthew's scraper selling. Andrew's pipeline fixed. $3K–$8K/mo.</p></div>
+        <div class="ti"><h4>After Proof</h4><p>Package + sell the agent system. Trading Bot goes live. $10K+/mo realistic.</p></div>
       </div>
     </div>
-    <div style="font-size:2rem;color:var(--border)">→</div>
-    <div style="display:flex;flex-direction:column;gap:8px;">
-      <div style="font-size:0.72rem;color:var(--muted);margin-bottom:4px;text-align:center;">DISCIPLES</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-        <div class="agent-node"><div class="aname">John</div><div class="arole">Prop Firm Rinse</div></div>
-        <div class="agent-node"><div class="aname">Daniel</div><div class="arole">Content Sub-bot</div></div>
-        <div class="agent-node"><div class="aname">Peter</div><div class="arole">AI Vault</div></div>
-        <div class="agent-node"><div class="aname">Andrew</div><div class="arole">Wholesale Auto</div></div>
-        <div class="agent-node"><div class="aname">Matthew</div><div class="arole">Lead Scraper</div></div>
-        <div class="agent-node"><div class="aname">Luke</div><div class="arole">Automation SVC</div></div>
-        <div class="agent-node"><div class="aname">Thomas</div><div class="arole">Trading Bot</div></div>
-        <div class="agent-node"><div class="aname">Philip</div><div class="arole">Content Engine</div></div>
-        <div class="agent-node"><div class="aname">Simon</div><div class="arole">AI Video TikTok</div></div>
-        <div class="agent-node"><div class="aname">Zara</div><div class="arole">TikTok Clothes</div></div>
-      </div>
-    </div>
-    <div style="font-size:2rem;color:var(--border)">→</div>
-    <div style="display:flex;flex-direction:column;gap:8px;">
-      <div style="font-size:0.72rem;color:var(--muted);margin-bottom:4px;text-align:center;">GITHUB REPO</div>
-      <div class="agent-node hub" style="text-align:center;">
-        <div class="aname" style="color:var(--green)">ed-empire-command</div>
-        <div class="arole">Shared source of truth</div>
-        <div style="margin-top:6px;font-size:0.65rem;color:var(--muted)">github.com/Edward577</div>
+    <div class="panel">
+      <h3>Revenue by Project</h3>
+      <p class="sub">Expected monthly contribution once fully operational.</p>
+      <div style="display:grid;gap:9px;margin-top:4px;">
+        <div><div style="display:flex;justify-content:space-between;font-size:.75rem;margin-bottom:4px;"><span>Prop Firm Rinse (John)</span><span style="color:var(--green)">$500–$2K/mo</span></div><div class="bar"><div class="fi fg" style="width:85%"></div></div></div>
+        <div><div style="display:flex;justify-content:space-between;font-size:.75rem;margin-bottom:4px;"><span>Apex Affiliate (via John)</span><span style="color:var(--green)">$100–$500/mo</span></div><div class="bar"><div class="fi fg" style="width:45%"></div></div></div>
+        <div><div style="display:flex;justify-content:space-between;font-size:.75rem;margin-bottom:4px;"><span>TikTok Shop (Fashion)</span><span style="color:var(--gold)">$300–$1K/mo</span></div><div class="bar"><div class="fi fgo" style="width:55%"></div></div></div>
+        <div><div style="display:flex;justify-content:space-between;font-size:.75rem;margin-bottom:4px;"><span>AI Wholesaler Vault (Peter)</span><span style="color:var(--gold)">$200–$800/mo</span></div><div class="bar"><div class="fi fgo" style="width:48%"></div></div></div>
+        <div><div style="display:flex;justify-content:space-between;font-size:.75rem;margin-bottom:4px;"><span>Claude Automation Svc (Luke)</span><span style="color:var(--orange)">$997–$3K/mo</span></div><div class="bar"><div class="fi fo" style="width:38%"></div></div></div>
+        <div><div style="display:flex;justify-content:space-between;font-size:.75rem;margin-bottom:4px;"><span>Lead List Scraper (Matthew)</span><span style="color:var(--orange)">$500–$1.5K/mo</span></div><div class="bar"><div class="fi fo" style="width:33%"></div></div></div>
+        <div><div style="display:flex;justify-content:space-between;font-size:.75rem;margin-bottom:4px;"><span>Trading Bot (Thomas)</span><span style="color:var(--muted)">TBD (6-8 wks)</span></div><div class="bar"><div class="fi" style="width:18%;background:var(--muted)"></div></div></div>
       </div>
     </div>
   </div>
 </div>
 
-<div class="footer">
-  Built by Claude Code + Codex &nbsp;·&nbsp;
-  <a href="https://github.com/Edward577/ed-empire-command" target="_blank">github.com/Edward577/ed-empire-command</a>
-  &nbsp;·&nbsp; Updated 2026-04-21
+<!-- AGENT MAP -->
+<div id="agents" class="section">
+  <div class="two" style="margin-bottom:18px;">
+    <div class="panel">
+      <h3>Who Does What</h3>
+      <p class="sub">Clean role split — agents hand off, they don't overlap.</p>
+      <div class="role rc"><h4>Claude Code</h4><p>Planning, memory, coordination, MCP tools, browser sessions, GitHub writes. Reads Codex output and assigns next tasks.</p></div>
+      <div class="role rx"><h4>Codex (GPT)</h4><p>Implementation, file edits, code generation, automation scripts, dashboards, repo updates. Reads Claude handoffs.</p></div>
+      <div class="role rg"><h4>Gemini</h4><p>Alt research, second opinions, cheap hook/caption ideation. Runs in Ed's Osagie Chrome profile.</p></div>
+      <div class="role rb"><h4>Browser Automation</h4><p>TikTok posting, X posting, store setup, listing QA. Blocked when Chrome Profile 4 is locked.</p></div>
+    </div>
+    <div class="panel">
+      <h3>Disciple Hierarchy</h3>
+      <p class="sub">Each disciple owns one lane. All report through the shared repo.</p>
+      <div class="disc-row"><span class="disc-dot" style="background:var(--green)"></span><b>John + Daniel</b><em>→ Prop Firm Rinse ($97) — LIVE</em></div>
+      <div class="disc-row"><span class="disc-dot" style="background:var(--green)"></span><b>TikTok Shop</b><em>→ Women's Fashion — LIVE (needs login)</em></div>
+      <div class="disc-row"><span class="disc-dot" style="background:var(--gold)"></span><b>Peter</b><em>→ AI Wholesaler Vault — product ready</em></div>
+      <div class="disc-row"><span class="disc-dot" style="background:var(--orange)"></span><b>Andrew</b><em>→ Wholesale Automation — 2 bugs</em></div>
+      <div class="disc-row"><span class="disc-dot" style="background:var(--orange)"></span><b>Matthew</b><em>→ Lead List Scraper ($497)</em></div>
+      <div class="disc-row"><span class="disc-dot" style="background:var(--orange)"></span><b>Luke</b><em>→ Claude Automation Service ($997)</em></div>
+      <div class="disc-row"><span class="disc-dot" style="background:var(--orange)"></span><b>Thomas</b><em>→ Trading Bot — paper trade phase</em></div>
+      <div class="disc-row"><span class="disc-dot" style="background:var(--red)"></span><b>Philip + Simon + Zara</b><em>→ Content / AI Video / Clothes — concept</em></div>
+    </div>
+  </div>
+  <div class="amap">
+    <b style="font-size:.95rem;">Agent Flow Map</b>
+    <p style="font-size:.72rem;color:var(--muted);margin-top:3px;">How commands flow from Ed → both AIs → shared repo → each disciple</p>
+    <div class="ami">
+      <div class="an hub" style="border-color:var(--gold);padding:14px 18px;"><div class="nm" style="color:var(--gold);font-size:.95rem;">Ed</div><div class="rl">Commander</div></div>
+      <div class="arr">→</div>
+      <div style="display:flex;flex-direction:column;gap:9px;">
+        <div class="an hub"><div class="nm" style="color:var(--accent)">Claude Code</div><div class="rl">Plans + Coordinates</div></div>
+        <div class="an hub" style="border-color:var(--gold)"><div class="nm" style="color:var(--gold)">Codex</div><div class="rl">Executes + Builds</div></div>
+      </div>
+      <div class="arr">→</div>
+      <div class="an hub" style="border-color:var(--green);padding:12px 16px;text-align:center;">
+        <div class="nm" style="color:var(--green)">ed-empire-command</div>
+        <div class="rl">GitHub Shared Repo</div>
+        <div style="font-size:.58rem;color:var(--muted);margin-top:3px;">Single source of truth</div>
+      </div>
+      <div class="arr">→</div>
+      <div class="agr">
+        <div class="an"><div class="nm">John</div><div class="rl">Rinse $97</div></div>
+        <div class="an"><div class="nm">Peter</div><div class="rl">AI Vault</div></div>
+        <div class="an"><div class="nm">Andrew</div><div class="rl">Wholesale</div></div>
+        <div class="an"><div class="nm">Matthew</div><div class="rl">Leads</div></div>
+        <div class="an"><div class="nm">Luke</div><div class="rl">Svc $997</div></div>
+        <div class="an"><div class="nm">Thomas</div><div class="rl">Trading</div></div>
+        <div class="an"><div class="nm">TikTok Shop</div><div class="rl">Fashion</div></div>
+        <div class="an"><div class="nm">Simon/Zara</div><div class="rl">Video/Clothes</div></div>
+      </div>
+    </div>
+  </div>
 </div>
 
+<script>
+function show(id,el){document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));document.getElementById(id).classList.add('active');el.classList.add('active');}
+</script>
 </body>
 </html>

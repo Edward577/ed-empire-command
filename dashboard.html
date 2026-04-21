@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ed's Empire Command Center</title>
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #12121a;
+    --card: #1a1a26;
+    --border: #2a2a40;
+    --accent: #6c63ff;
+    --gold: #f5c518;
+    --green: #00e676;
+    --orange: #ff9800;
+    --red: #ff4444;
+    --text: #e8e8f0;
+    --muted: #666688;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    min-height: 100vh;
+    padding: 24px;
+  }
+
+  /* HEADER */
+  .header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  .header h1 {
+    font-size: 2.4rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #6c63ff, #f5c518, #00e676);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -1px;
+  }
+  .header p {
+    color: var(--muted);
+    margin-top: 6px;
+    font-size: 0.9rem;
+  }
+  .live-badge {
+    display: inline-block;
+    background: var(--green);
+    color: #000;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 99px;
+    margin-left: 10px;
+    vertical-align: middle;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.5} }
+
+  /* SUMMARY STRIP */
+  .summary {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 40px;
+  }
+  .stat-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+  }
+  .stat-card .val {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--accent);
+  }
+  .stat-card .val.green { color: var(--green); }
+  .stat-card .val.gold  { color: var(--gold); }
+  .stat-card .label {
+    font-size: 0.75rem;
+    color: var(--muted);
+    margin-top: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  /* TIMELINE */
+  .section-title {
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--muted);
+    margin-bottom: 16px;
+  }
+
+  /* PROJECT GRID */
+  .projects {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 20px;
+    margin-bottom: 40px;
+  }
+  .project-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .project-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+  }
+  .project-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+  }
+  .card-live::before   { background: var(--green); }
+  .card-ready::before  { background: var(--gold); }
+  .card-build::before  { background: var(--orange); }
+  .card-concept::before{ background: var(--red); }
+
+  .card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 12px;
+  }
+  .card-title { font-size: 1rem; font-weight: 700; }
+  .card-agent { font-size: 0.75rem; color: var(--muted); margin-top: 2px; }
+  .status-badge {
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 3px 9px;
+    border-radius: 99px;
+    white-space: nowrap;
+  }
+  .badge-live    { background: rgba(0,230,118,0.15); color: var(--green); border: 1px solid var(--green); }
+  .badge-ready   { background: rgba(245,197,24,0.15); color: var(--gold); border: 1px solid var(--gold); }
+  .badge-build   { background: rgba(255,152,0,0.15); color: var(--orange); border: 1px solid var(--orange); }
+  .badge-concept { background: rgba(255,68,68,0.15); color: var(--red); border: 1px solid var(--red); }
+
+  /* PROGRESS BAR */
+  .progress-wrap {
+    margin: 14px 0 6px;
+  }
+  .progress-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.72rem;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+  .progress-bar {
+    height: 6px;
+    background: var(--border);
+    border-radius: 99px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    border-radius: 99px;
+    transition: width 1s ease;
+  }
+  .fill-green  { background: var(--green); }
+  .fill-gold   { background: var(--gold); }
+  .fill-orange { background: var(--orange); }
+  .fill-red    { background: var(--red); }
+
+  .card-meta {
+    display: flex;
+    gap: 12px;
+    margin-top: 14px;
+    flex-wrap: wrap;
+  }
+  .meta-item {
+    font-size: 0.72rem;
+    color: var(--muted);
+  }
+  .meta-item span { color: var(--text); font-weight: 600; }
+
+  /* PRIORITY STACK */
+  .priority-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 40px;
+  }
+  .week-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px;
+  }
+  .week-card h3 {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .week-card ul { list-style: none; }
+  .week-card li {
+    font-size: 0.8rem;
+    color: var(--text);
+    padding: 6px 0;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+  }
+  .week-card li:last-child { border-bottom: none; }
+  .week-card li .num {
+    color: var(--accent);
+    font-weight: 700;
+    min-width: 16px;
+  }
+
+  /* REVENUE CHART */
+  .revenue-section {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 24px;
+    margin-bottom: 40px;
+  }
+  .revenue-bars {
+    display: flex;
+    gap: 24px;
+    align-items: flex-end;
+    height: 140px;
+    margin-top: 20px;
+    padding-top: 10px;
+  }
+  .rev-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 8px; }
+  .rev-bar-wrap { width: 100%; display: flex; gap: 6px; align-items: flex-end; height: 100px; }
+  .rev-bar {
+    flex: 1;
+    border-radius: 6px 6px 0 0;
+    min-height: 4px;
+    transition: height 1s ease;
+  }
+  .bar-cons { background: linear-gradient(180deg, #6c63ff88, #6c63ff33); }
+  .bar-opt  { background: linear-gradient(180deg, #00e676, #00e67633); }
+  .rev-label { font-size: 0.7rem; color: var(--muted); text-align: center; }
+  .rev-legend { display: flex; gap: 16px; margin-top: 16px; }
+  .rev-legend-item { display: flex; align-items: center; gap: 6px; font-size: 0.72rem; color: var(--muted); }
+  .legend-dot { width: 10px; height: 10px; border-radius: 3px; }
+
+  /* AGENT MAP */
+  .agent-map {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 24px;
+    margin-bottom: 40px;
+  }
+  .agent-flow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    flex-wrap: wrap;
+    margin-top: 20px;
+  }
+  .agent-node {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 10px 16px;
+    text-align: center;
+    min-width: 100px;
+  }
+  .agent-node.hub {
+    background: linear-gradient(135deg, #1a1a40, #2a2a60);
+    border-color: var(--accent);
+    padding: 14px 22px;
+  }
+  .agent-node .aname { font-size: 0.8rem; font-weight: 700; }
+  .agent-node .arole { font-size: 0.65rem; color: var(--muted); margin-top: 2px; }
+  .arrow {
+    color: var(--border);
+    font-size: 1.2rem;
+    padding: 0 4px;
+  }
+  .agent-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: center;
+  }
+  .connector {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  /* FOOTER */
+  .footer {
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.72rem;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+  }
+  .footer a { color: var(--accent); text-decoration: none; }
+
+  @media (max-width: 768px) {
+    .summary { grid-template-columns: repeat(2,1fr); }
+    .priority-grid { grid-template-columns: 1fr; }
+    .header h1 { font-size: 1.6rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Ed's Empire Command Center <span class="live-badge">LIVE</span></h1>
+  <p>10 Projects · 9 Agents · Claude + Codex · github.com/Edward577/ed-empire-command</p>
+</div>
+
+<!-- SUMMARY STRIP -->
+<div class="summary">
+  <div class="stat-card">
+    <div class="val green">2</div>
+    <div class="label">Live Products</div>
+  </div>
+  <div class="stat-card">
+    <div class="val gold">$97</div>
+    <div class="label">Current Price Point</div>
+  </div>
+  <div class="stat-card">
+    <div class="val">10</div>
+    <div class="label">Active Projects</div>
+  </div>
+  <div class="stat-card">
+    <div class="val gold">$10K+</div>
+    <div class="label">90-Day Potential</div>
+  </div>
+</div>
+
+<!-- PROJECTS -->
+<div class="section-title">All 10 Projects</div>
+<div class="projects">
+
+  <div class="project-card card-live">
+    <div class="card-top">
+      <div>
+        <div class="card-title">Prop Firm Rinse</div>
+        <div class="card-agent">Agent: John + Daniel</div>
+      </div>
+      <span class="status-badge badge-live">LIVE</span>
+    </div>
+    <div class="progress-wrap">
+      <div class="progress-label"><span>% to monetized</span><span>95%</span></div>
+      <div class="progress-bar"><div class="progress-fill fill-green" style="width:95%"></div></div>
+    </div>
+    <div class="card-meta">
+      <div class="meta-item">Price: <span>$97</span></div>
+      <div class="meta-item">Platform: <span>Gumroad</span></div>
+      <div class="meta-item">Est: <span>Already earning</span></div>
+    </div>
+  </div>
+
+  <div class="project-card card-live">
+    <div class="card-top">
+      <div>
+        <div class="card-title">TikTok Shop (Women's Fashion)</div>
+        <div class="card-agent">Agent: TikTok Shop</div>
+      </div>
+      <span class="status-badge badge-live">LIVE</span>
+    </div>
+    <div class="progress-wrap">
+      <div class="progress-label"><span>% to monetized</span><span>70%</span></div>
+      <div class="progress-bar"><div class="progress-fill fill-green" style="width:70%"></div></div>
+    </div>
+    <div class="card-meta">
+      <div class="meta-item">Margin: <span>$15-40/order</span></div>
+      <div class="meta-item">Platform: <span>Shopify + CJ</span></div>
+      <div class="meta-item">Est: <span>1-2 weeks</span></div>
+    </div>
+  </div>
+
+  <div class="project-card card-ready">
+    <div class="card-top">
+      <div>
+        <div class="card-title">AI Wholesaler Vault</div>
+        <div class="card-agent">Agent: Peter</div>
+      </div>
+      <span class="status-badge badge-ready">PRODUCT READY</span>
+    </div>
+    <div class="progress-wrap">
+      <div class="progress-label"><span>% to monetized</span><span>80%</span></div>
+      <div class="progress-bar"><div class="progress-fill fill-gold" style="width:80%"></div></div>
+    </div>
+    <div class="card-meta">
+      <div class="meta-item">Price: <span>$47-$197</span></div>
+      <div class="meta-item">Blocker: <span>Ed logs in Gumroad</span></div>
+      <div class="meta-item">Est: <span>1 week</span></div>
+    </div>
+  </div>
+
+  <div class="project-card card-build">
+    <div class="card-top">
+      <div>
+        <div class="card-title">Wholesale Automation</div>
+        <div class="card-agent">Agent: Andrew</div>
+      </div>
+      <span class="status-badge badge-build">2 BUGS</span>
+    </div>
+    <div class="progress-wrap">
+      <div class="progress-label"><span>% to monetized</span><span>60%</span></div>
+      <div class="progress-bar"><div class="progress-fill fill-orange" style="width:60%"></div></div>
+    </div>
+    <div class="card-meta">
+      <div class="meta-item">Price: <span>$97-$497/mo</span></div>
+      <div class="meta-item">Platform: <span>SaaS / DFY</span></div>
+      <div class="meta-item">Est: <span>3-4 weeks</span></div>
+    </div>
+  </div>
+
+  <div class="project-card card-build">
+    <div class="card-top">
+      <div>
+        <div class="card-title">Lead List Scraper</div>
+        <div class="card-agent">Agent: Matthew</div>
+      </div>
+      <span class="status-badge badge-build">BUILT</span>
+    </div>
+    <div class="progress-wrap">
+      <div class="progress-label"><span>% to monetized</span><span>65%</span></div>
+      <div class="progress-bar"><div class="progress-fill fill-orange" style="width:65%"></div></div>
+    </div>
+    <div class="card-meta">
+      <div class="meta-item">Price: <span>$497</span></div>
+      <div class="meta-item">Platform: <span>Gumroad</span></div>
+      <div class="meta-item">Est: <span>3-4 weeks</span></div>
+    </div>
+  </div>
+
+  <div class="project-card card-build">
+    <div class="card-top">
+      <div>
+        <div class="card-title">Claude Automation Service</div>
+        <div class="card-agent">Agent: Luke</div>
+      </div>
+      <span class="status-badge badge-build">BUILT</span>
+    </div>
+    <div class="progress-wrap">
+      <div class="progress-label"><span>% to monetized</span><span>60%</span></div>
+      <div class="progress-bar"><div class="progress-fill fill-orange" style="width:60%"></div></div>
+    </div>
+    <div class="card-meta">
+      <div class="meta-item">Price: <span>$997</span></div>
+      <div class="meta-item">Model: <span>Done-for-you</span></div>
+      <div class="meta-item">Est: <span>4-6 weeks</span></div>
+    </div>
+  </div>
+
+  <div class="project-card card-build">
+    <div class="card-top">
+      <div>
+        <div class="card-title">Trading Bot</div>
+        <div class="card-agent">Agent: Thomas</div>
+      </div>
+      <span class="status-badge badge-build">PAPER TRADE</span>
+    </div>
+    <div class="progress-wrap">
+      <div class="progress-label"><span>% to monetized</span><span>50%</span></div>
+      <div class="progress-bar"><div class="progress-fill fill-orange" style="width:50%"></div></div>
+    </div>
+    <div class="card-meta">
+      <div class="meta-item">Model: <span>Signals sub</span></div>
+      <div class="meta-item">Price: <span>$97-$297/mo</span></div>
+      <div class="meta-item">Est: <span>6-8 weeks</span></div>
+    </div>
+  </div>
+
+  <div class="project-card card-build">
+    <div class="card-top">
+      <div>
+        <div class="card-title">Content Engine</div>
+        <div class="card-agent">Agent: Philip</div>
+      </div>
+      <span class="status-badge badge-build">INFRA</span>
+    </div>
+    <div class="progress-wrap">
+      <div class="progress-label"><span>% to monetized</span><span>55%</span></div>
+      <div class="progress-bar"><div class="progress-fill fill-orange" style="width:55%"></div></div>
+    </div>
+    <div class="card-meta">
+      <div class="meta-item">Role: <span>Feeds all lanes</span></div>
+      <div class="meta-item">Direct rev: <span>N/A</span></div>
+    </div>
+  </div>
+
+  <div class="project-card card-concept">
+    <div class="card-top">
+      <div>
+        <div class="card-title">AI Video TikTok Shark</div>
+        <div class="card-agent">Agent: Simon</div>
+      </div>
+      <span class="status-badge badge-concept">CONCEPT</span>
+    </div>
+    <div class="progress-wrap">
+      <div class="progress-label"><span>% to monetized</span><span>20%</span></div>
+      <div class="progress-bar"><div class="progress-fill fill-red" style="width:20%"></div></div>
+    </div>
+    <div class="card-meta">
+      <div class="meta-item">Model: <span>TBD</span></div>
+      <div class="meta-item">Est: <span>8-12 weeks</span></div>
+    </div>
+  </div>
+
+  <div class="project-card card-concept">
+    <div class="card-top">
+      <div>
+        <div class="card-title">TikTok Shop Clothes</div>
+        <div class="card-agent">Agent: Zara</div>
+      </div>
+      <span class="status-badge badge-concept">SETUP PENDING</span>
+    </div>
+    <div class="progress-wrap">
+      <div class="progress-label"><span>% to monetized</span><span>15%</span></div>
+      <div class="progress-bar"><div class="progress-fill fill-red" style="width:15%"></div></div>
+    </div>
+    <div class="card-meta">
+      <div class="meta-item">Margin: <span>$10-30/order</span></div>
+      <div class="meta-item">Platform: <span>CJ + TikTok native</span></div>
+      <div class="meta-item">Est: <span>8-12 weeks</span></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- REVENUE PROJECTION -->
+<div class="section-title">Revenue Projection</div>
+<div class="revenue-section">
+  <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+    <div>
+      <div style="font-size:1rem;font-weight:700;">90-Day Monetization Runway</div>
+      <div style="font-size:0.78rem;color:var(--muted);margin-top:4px;">Conservative vs Optimistic</div>
+    </div>
+    <div class="rev-legend">
+      <div class="rev-legend-item"><div class="legend-dot" style="background:#6c63ff88"></div> Conservative</div>
+      <div class="rev-legend-item"><div class="legend-dot" style="background:#00e676"></div> Optimistic</div>
+    </div>
+  </div>
+  <div class="revenue-bars">
+    <div class="rev-col">
+      <div class="rev-bar-wrap">
+        <div class="rev-bar bar-cons" style="height:8%"></div>
+        <div class="rev-bar bar-opt" style="height:30%"></div>
+      </div>
+      <div class="rev-label">30 days<br><span style="color:var(--muted)">$200–$3K</span></div>
+    </div>
+    <div class="rev-col">
+      <div class="rev-bar-wrap">
+        <div class="rev-bar bar-cons" style="height:30%"></div>
+        <div class="rev-bar bar-opt" style="height:50%"></div>
+      </div>
+      <div class="rev-label">60 days<br><span style="color:var(--muted)">$1K–$10K</span></div>
+    </div>
+    <div class="rev-col">
+      <div class="rev-bar-wrap">
+        <div class="rev-bar bar-cons" style="height:60%"></div>
+        <div class="rev-bar bar-opt" style="height:100%"></div>
+      </div>
+      <div class="rev-label">90 days<br><span style="color:var(--muted)">$2K–$20K</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- PRIORITY STACK -->
+<div class="section-title">Priority Stack — What to Do First</div>
+<div class="priority-grid">
+  <div class="week-card">
+    <h3>Week 1 — Fastest Money</h3>
+    <ul>
+      <li><span class="num">1</span>Fix X + Instagram auth → post John daily</li>
+      <li><span class="num">2</span>List AI Wholesaler Vault on Peter's Gumroad</li>
+      <li><span class="num">3</span>Sign up Apex affiliate ($100/referral)</li>
+    </ul>
+  </div>
+  <div class="week-card">
+    <h3>Week 2 — Build Momentum</h3>
+    <ul>
+      <li><span class="num">4</span>TikTok Shop merchandising + submit catalog</li>
+      <li><span class="num">5</span>Fix Andrew's 2 pipeline bugs</li>
+      <li><span class="num">6</span>Test Matthew's Lead List Scraper end-to-end</li>
+    </ul>
+  </div>
+  <div class="week-card">
+    <h3>Month 2 — Scale Up</h3>
+    <ul>
+      <li><span class="num">7</span>Luke closes first $997 service client</li>
+      <li><span class="num">8</span>Thomas completes 30-day paper trade</li>
+      <li><span class="num">9</span>Simon defines AI Video product</li>
+      <li><span class="num">10</span>Zara launches TikTok Shop Clothes</li>
+    </ul>
+  </div>
+</div>
+
+<!-- AGENT MAP -->
+<div class="section-title">Agent Map</div>
+<div class="agent-map">
+  <div style="display:flex;gap:32px;flex-wrap:wrap;justify-content:center;align-items:center;">
+    <div style="text-align:center;">
+      <div style="font-size:0.72rem;color:var(--muted);margin-bottom:8px;">COORDINATION</div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <div class="agent-node hub"><div class="aname" style="color:var(--accent)">Claude Code</div><div class="arole">Plans + Coordinates</div></div>
+        <div class="agent-node hub"><div class="aname" style="color:var(--gold)">Codex</div><div class="arole">Executes Code</div></div>
+      </div>
+    </div>
+    <div style="font-size:2rem;color:var(--border)">→</div>
+    <div style="display:flex;flex-direction:column;gap:8px;">
+      <div style="font-size:0.72rem;color:var(--muted);margin-bottom:4px;text-align:center;">DISCIPLES</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+        <div class="agent-node"><div class="aname">John</div><div class="arole">Prop Firm Rinse</div></div>
+        <div class="agent-node"><div class="aname">Daniel</div><div class="arole">Content Sub-bot</div></div>
+        <div class="agent-node"><div class="aname">Peter</div><div class="arole">AI Vault</div></div>
+        <div class="agent-node"><div class="aname">Andrew</div><div class="arole">Wholesale Auto</div></div>
+        <div class="agent-node"><div class="aname">Matthew</div><div class="arole">Lead Scraper</div></div>
+        <div class="agent-node"><div class="aname">Luke</div><div class="arole">Automation SVC</div></div>
+        <div class="agent-node"><div class="aname">Thomas</div><div class="arole">Trading Bot</div></div>
+        <div class="agent-node"><div class="aname">Philip</div><div class="arole">Content Engine</div></div>
+        <div class="agent-node"><div class="aname">Simon</div><div class="arole">AI Video TikTok</div></div>
+        <div class="agent-node"><div class="aname">Zara</div><div class="arole">TikTok Clothes</div></div>
+      </div>
+    </div>
+    <div style="font-size:2rem;color:var(--border)">→</div>
+    <div style="display:flex;flex-direction:column;gap:8px;">
+      <div style="font-size:0.72rem;color:var(--muted);margin-bottom:4px;text-align:center;">GITHUB REPO</div>
+      <div class="agent-node hub" style="text-align:center;">
+        <div class="aname" style="color:var(--green)">ed-empire-command</div>
+        <div class="arole">Shared source of truth</div>
+        <div style="margin-top:6px;font-size:0.65rem;color:var(--muted)">github.com/Edward577</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  Built by Claude Code + Codex &nbsp;·&nbsp;
+  <a href="https://github.com/Edward577/ed-empire-command" target="_blank">github.com/Edward577/ed-empire-command</a>
+  &nbsp;·&nbsp; Updated 2026-04-21
+</div>
+
+</body>
+</html>

@@ -88,6 +88,122 @@
     letter-spacing: 0.5px;
   }
 
+  /* CEO DECISION BOARD */
+  .decision-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 40px;
+  }
+  .decision-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px;
+  }
+  .decision-card.keep { border-color: rgba(0,230,118,0.35); }
+  .decision-card.build { border-color: rgba(255,152,0,0.35); }
+  .decision-card.support { border-color: rgba(108,99,255,0.35); }
+  .decision-card.cut { border-color: rgba(255,68,68,0.35); }
+  .decision-card h3 {
+    font-size: 0.88rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .decision-card.keep h3 { color: var(--green); }
+  .decision-card.build h3 { color: var(--orange); }
+  .decision-card.support h3 { color: var(--accent); }
+  .decision-card.cut h3 { color: var(--red); }
+  .decision-card p {
+    font-size: 0.76rem;
+    color: var(--muted);
+    margin-bottom: 12px;
+    line-height: 1.5;
+  }
+  .decision-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .decision-list li {
+    padding: 10px 12px;
+    border-radius: 10px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    font-size: 0.78rem;
+    line-height: 1.45;
+  }
+  .decision-list strong {
+    display: block;
+    color: var(--text);
+    margin-bottom: 3px;
+  }
+  .decision-note {
+    font-size: 0.72rem;
+    color: var(--muted);
+    margin-top: 12px;
+  }
+
+  /* MANUAL ACTIONS */
+  .manual-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-bottom: 40px;
+  }
+  .manual-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px;
+  }
+  .manual-card h3 {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--gold);
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .manual-card ul {
+    list-style: none;
+    display: grid;
+    gap: 10px;
+  }
+  .manual-card li {
+    padding: 10px 12px;
+    border-radius: 10px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    font-size: 0.78rem;
+    line-height: 1.45;
+  }
+  .manual-card li strong {
+    color: var(--text);
+  }
+  .callout {
+    margin-bottom: 40px;
+    background: linear-gradient(135deg, #151523, #17172b);
+    border: 1px solid rgba(108,99,255,0.32);
+    border-radius: 14px;
+    padding: 20px 22px;
+  }
+  .callout h3 {
+    font-size: 0.92rem;
+    color: var(--accent);
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+  }
+  .callout p {
+    font-size: 0.82rem;
+    color: var(--text);
+    line-height: 1.6;
+  }
+
   /* TIMELINE */
   .section-title {
     font-size: 1rem;
@@ -317,6 +433,8 @@
 
   @media (max-width: 768px) {
     .summary { grid-template-columns: repeat(2,1fr); }
+    .decision-grid { grid-template-columns: 1fr; }
+    .manual-grid { grid-template-columns: 1fr; }
     .priority-grid { grid-template-columns: 1fr; }
     .header h1 { font-size: 1.6rem; }
   }
@@ -344,8 +462,81 @@
     <div class="label">Active Projects</div>
   </div>
   <div class="stat-card">
-    <div class="val gold">$10K+</div>
-    <div class="label">90-Day Potential</div>
+    <div class="val gold">3</div>
+    <div class="label">Push Now</div>
+  </div>
+</div>
+
+<div class="callout">
+  <h3>What You Need To Know First</h3>
+  <p>
+    This dashboard is the shared truth for both Claude and Codex. The fastest money is not spread across all 10 lanes.
+    The best move is to push 3 lanes hard now, keep 4 in build mode, keep 2 as support or R&amp;D, and merge or cut the weakest overlap.
+  </p>
+</div>
+
+<div class="section-title">CEO Decision Board</div>
+<div class="decision-grid">
+  <div class="decision-card keep">
+    <h3>Push Now</h3>
+    <p>These have the fastest path to real money and deserve most of the next 30 days.</p>
+    <ul class="decision-list">
+      <li><strong>Prop Firm Rinse</strong>Already live. Best immediate money lever once auth blockers are fixed.</li>
+      <li><strong>TikTok Shop (Women's Fashion)</strong>1-2 weeks to first orders after Seller Center login, videos, and catalog approval.</li>
+      <li><strong>AI Wholesaler Vault</strong>Almost done. Can earn within days once Ed logs into the right Gumroad account and publishes.</li>
+    </ul>
+  </div>
+
+  <div class="decision-card build">
+    <h3>Build Next</h3>
+    <p>Keep these alive, but only after the first three are moving.</p>
+    <ul class="decision-list">
+      <li><strong>Wholesale Automation</strong>Keep only if the 2 bugs are fixed this month. Otherwise pause.</li>
+      <li><strong>Lead List Scraper</strong>Strong medium-term offer if packaged and tested on a real list.</li>
+      <li><strong>Claude Automation Service</strong>Good money only if you do outreach and close a beta client.</li>
+    </ul>
+  </div>
+
+  <div class="decision-card support">
+    <h3>Support / R&amp;D</h3>
+    <p>These help the system, but they should not steal focus from near-term revenue.</p>
+    <ul class="decision-list">
+      <li><strong>Content Engine</strong>Keep as infrastructure that feeds John, TikTok Shop, and future content lanes.</li>
+      <li><strong>Trading Bot</strong>Keep as research only until 30-day paper trading proves it.</li>
+    </ul>
+  </div>
+
+  <div class="decision-card cut">
+    <h3>Merge / Cut</h3>
+    <p>These should not be treated as top-level businesses right now.</p>
+    <ul class="decision-list">
+      <li><strong>AI Video TikTok Shark</strong>Merge into the main content engine unless it proves unique traction fast.</li>
+      <li><strong>TikTok Shop Clothes (Zara)</strong>Fold into the existing women's fashion TikTok Shop lane instead of running a duplicate lane.</li>
+    </ul>
+    <div class="decision-note">Rule: if a lane overlaps heavily and has no proof yet, merge it instead of funding more complexity.</div>
+  </div>
+</div>
+
+<div class="section-title">Ed-Only Manual Actions</div>
+<div class="manual-grid">
+  <div class="manual-card">
+    <h3>Do These This Week</h3>
+    <ul>
+      <li><strong>TikTok Shop:</strong> Manually re-login to TikTok Studio / Seller Center so Codex can submit the catalog and sync products.</li>
+      <li><strong>Peter's Vault:</strong> Log into the correct Gumroad account and publish the finished product.</li>
+      <li><strong>John lane:</strong> Re-auth X, Instagram, and Blotato so the live content machine actually posts daily.</li>
+      <li><strong>Apex affiliate:</strong> Sign up and add the link into John's distribution flow.</li>
+    </ul>
+  </div>
+  <div class="manual-card">
+    <h3>Time To First Profit</h3>
+    <ul>
+      <li><strong>Now to 30 days:</strong> Prop Firm Rinse</li>
+      <li><strong>Days to 1 week:</strong> AI Wholesaler Vault after listing</li>
+      <li><strong>1-2 weeks:</strong> TikTok Shop if approval and videos are finished</li>
+      <li><strong>3-6 weeks:</strong> Wholesale Automation, Lead List Scraper, Claude Automation Service</li>
+      <li><strong>6-12+ weeks:</strong> Trading Bot, AI Video TikTok Shark, Zara lane</li>
+    </ul>
   </div>
 </div>
 

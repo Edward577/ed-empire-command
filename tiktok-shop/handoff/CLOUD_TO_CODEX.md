@@ -33,8 +33,12 @@ Permanent prompt and realism plan now live in:
 
 - `tiktok-shop/reports/TIKTOK_100_PROMPT.md`
 - `tiktok-shop/reports/AI_VIDEO_PIPELINE_READY.md`
+- `tiktok-shop/reports/POSTING_QUEUE_READY.md`
+- `tiktok-shop/reports/TIKTOK_OFFICIAL_RESEARCH.md`
 
 `video 2015` was checked on 2026-04-21 and was NOT FOUND in the shared repo.
+
+Posting-ready creator-style queue now exists for the live dress lane, so content can keep moving without waiting on the blocked old queue.
 
 ## ONE REPO FROM NOW ON
 Both Claude and Codex write here. Old `TikTok Shop Business 1\` is retired.

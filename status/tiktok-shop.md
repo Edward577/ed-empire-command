@@ -44,9 +44,12 @@
 
 - **Permanent prompt:** `tiktok-shop/reports/TIKTOK_100_PROMPT.md`
 - **AI realism plan:** `tiktok-shop/reports/AI_VIDEO_PIPELINE_READY.md`
+- **Posting queue:** `tiktok-shop/reports/POSTING_QUEUE_READY.md`
+- **Official research notes:** `tiktok-shop/reports/TIKTOK_OFFICIAL_RESEARCH.md`
 - `video 2015` check: completed on 2026-04-21 — NOT FOUND in shared repo
 - Current best visual direction: realistic creator-style product videos, not sterile catalog AI
 - Current AI lane: ready to keep generating clips for current live products without waiting on the blocked old queue
+- Current content lane: ready to post 5 creator-style videos/day from the current live dress products
 
 ## What is left
 
@@ -54,7 +57,7 @@
 2. **Ed:** Log into TikTok Seller Center → paste optimized content from listings file → submit for review
 3. **Codex:** Add 4 replacement products via CJ browser flow → Shopify → Optima → TikTok
 4. Verify CJ -> Shopify -> Optima -> TikTok end-to-end for each replacement product
-5. Run the AI video pipeline against the current live products (after listings approved)
+5. Run and post the current live-product AI video queue while replacement products move through sync
 
 ## Ed-only actions
 

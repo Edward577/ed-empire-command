@@ -94,3 +94,18 @@ Every new prompt should enforce:
 
 The lane is ready to keep generating realistic clips for current live products now.
 Do not wait on the blocked old queue to keep the content engine moving.
+
+## Official TikTok Research Alignment
+
+See:
+
+- `tiktok-shop/reports/TIKTOK_OFFICIAL_RESEARCH.md`
+
+Current repo direction matches official TikTok guidance:
+
+- TikTok-first creator feel
+- 9:16 vertical
+- hook/body/close structure
+- sound and captions
+- multiple active creatives
+- clear shopping CTA

@@ -1,13 +1,24 @@
 # Active Tasks
 
-- `[todo] Claude | TikTok Shop | Optimize the current live TikTok listings on TikTok Shop only; do not edit Shopify listings | none | update handoff with concrete listing changes, quality blockers, and needs-attention findings`
-- `[todo] Claude | AI video pipeline | Write TikTok product video coordination notes from current product images and listing angles | none | update handoff`
-- `[done] Claude + Codex | Prompt sync | Create permanent shared TikTok 100 percent prompt and realism plan in repo | completed | see tiktok-shop/reports/TIKTOK_100_PROMPT.md and AI_VIDEO_PIPELINE_READY.md`
-- `[todo] Claude | TikTok Shop | Use the current live Seller Center truth: Active 6 / Reviewing 2 / Needs attention 7 / 5 listings to be optimized | none | keep TikTok-side notes aligned to the current live batch`
-- `[todo] Claude | Sourcing support | Treat the blocked 5-item expansion queue as a replacement-sourcing problem and propose replacement product angles/categories, not the same unavailable SKUs | none | update handoff`
-- `[todo] Claude | TikTok Shop | Check local coordination repo every 3 minutes while active | none | update CLOUD_TO_CODEX.md when status changes`
-- `[todo] Codex | CJ/Shopify/Optima | Replace the blocked 5-item queue with sourceable CJ candidates, then drive the add flow into Shopify and through Optima sync when access is available | session-dependent | update repo status`
-- `[todo] Codex | TikTok Shop | Maintain queue control, priorities, product queue management, and final integration across Claude updates | none | review Cloud updates`
+## COMPLETED ✅
+
+- `[done] Claude | TikTok Shop | Optimize the current live TikTok listings | 2026-04-21 | output: tiktok-shop/listings/optimized_listings.md — 9 listings ready to paste into Seller Center`
+- `[done] Claude | Sourcing support | Replace blocked 5-item queue with 4 sourceable replacement products | 2026-04-21 | see NEXT_ADD_QUEUE.md`
+- `[done] Claude | Repo sync | Unified repo, Codex redirected off old repos | 2026-04-21 | ed-empire-command is single source of truth`
+- `[done] Both | Prompt sync | Shared prompt understanding written back to repo | 2026-04-21 | see tiktok-shop/SHARED_UNDERSTANDING.md`
+- `[done] Claude + Codex | AI video pipeline | 5 MP4 videos rendered successfully at 22:24 2026-04-20 | see Projects/tiktok_shop/videos/output/ — 5 confirmed successes`
+- `[done] Both | video 2015 | Searched entire repo and workspace — NOT FOUND | 2026-04-21 | recorded here and in SHARED_UNDERSTANDING.md`
+- `[done] Claude | TikTok content queue | Packaged a posting-ready creator-style queue for the live dress lane | 2026-04-21 | see tiktok-shop/reports/POSTING_QUEUE_READY.md`
+
+## BLOCKED — waiting on Ed
+
+- `[blocked] Ed-only | TikTok Seller Center | Log in → paste optimized copy from tiktok-shop/listings/optimized_listings.md → submit for review | blocker: manual login needed | ~15 mins`
+- `[blocked] Codex | CJ browser add flow | Add 4 replacement products from NEXT_ADD_QUEUE.md | blocker: needs stable CJ + TikTok Seller Center session | 1-3 hrs`
+
+## TODO (unblocked — can start now)
+
+- `[todo] Both | AI video pipeline | Run tiktok_video_gen.py against current 6 active TikTok product set (align video products to what's actually live in Seller Center) | none | see video pipeline plan in SHARED_UNDERSTANDING.md`
+- `[todo] Both | Dashboard | Keep dashboard.html updated with real TikTok state after each major step | none | ed-empire-command/dashboard.html`
 
 ## Rules
 
@@ -16,6 +27,7 @@
 - Optimize TikTok Shop listings before heavy AI video generation
 - Current blocked queue truth: the 5 queued expansion products are NOT_FOUND on TikTok and unavailable in the live CJ Add Product modal
 - `video 2015` truth: checked on 2026-04-21 and not found in the shared repo
+- Posting queue truth: current live dress lane has a ready-to-run 5-video creator-style queue in `tiktok-shop/reports/POSTING_QUEUE_READY.md`
 - Split work evenly to conserve credit usage and avoid duplicated work
 - Keep the repo loop/check cadence active when the work is heavy and tied to business execution
 - Current heavy-work cadence: check and act every 3 minutes

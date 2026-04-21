@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agent Command Center Dashboard</title>
+  <style>
+    :root {
+      --bg: #f4efe5;
+      --paper: #fffaf1;
+      --ink: #1f1b18;
+      --muted: #6f655b;
+      --line: #dccfb8;
+      --accent: #c75c2f;
+      --accent-2: #16697a;
+      --accent-3: #61764b;
+      --accent-4: #7c3f58;
+      --good: #4f772d;
+      --warn: #c58b18;
+      --bad: #a63c3c;
+      --shadow: 0 18px 45px rgba(58, 39, 19, 0.12);
+      --radius: 22px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(199, 92, 47, 0.14), transparent 22%),
+        radial-gradient(circle at top right, rgba(22, 105, 122, 0.12), transparent 22%),
+        linear-gradient(180deg, #f7f2e9 0%, #efe5d6 100%);
+    }
+
+    .shell {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 32px 20px 56px;
+    }
+
+    .hero {
+      background:
+        linear-gradient(135deg, rgba(199, 92, 47, 0.16), rgba(124, 63, 88, 0.1)),
+        var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 32px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .hero-inner {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr;
+      gap: 24px;
+      padding: 32px;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      margin-bottom: 14px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      background: rgba(199, 92, 47, 0.12);
+      color: var(--accent);
+    }
+
+    h1, h2, h3 {
+      margin: 0;
+      line-height: 1.05;
+      font-weight: 700;
+    }
+
+    h1 {
+      font-size: clamp(2.5rem, 5vw, 4.6rem);
+      max-width: 11ch;
+    }
+
+    p {
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    .hero-copy p {
+      margin-top: 16px;
+      max-width: 62ch;
+      color: var(--muted);
+      font-size: 1.02rem;
+    }
+
+    .hero-cards {
+      display: grid;
+      gap: 14px;
+      align-content: start;
+    }
+
+    .mini-card {
+      padding: 16px 18px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.74);
+      border: 1px solid rgba(220, 207, 184, 0.9);
+    }
+
+    .mini-label {
+      font-size: 0.8rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .mini-value {
+      margin-top: 8px;
+      font-size: 1.65rem;
+      font-weight: 700;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      gap: 20px;
+      margin-top: 24px;
+    }
+
+    .panel {
+      background: rgba(255, 250, 241, 0.94);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 24px;
+    }
+
+    .span-7 { grid-column: span 7; }
+    .span-5 { grid-column: span 5; }
+    .span-6 { grid-column: span 6; }
+    .span-12 { grid-column: span 12; }
+
+    .section-title {
+      font-size: 1.45rem;
+      margin-bottom: 8px;
+    }
+
+    .section-note {
+      color: var(--muted);
+      margin-bottom: 18px;
+    }
+
+    .track-list,
+    .phase-list,
+    .role-list {
+      display: grid;
+      gap: 14px;
+    }
+
+    .track,
+    .phase,
+    .role {
+      padding: 16px;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: #fffdf8;
+    }
+
+    .track-head,
+    .phase-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      align-items: baseline;
+      margin-bottom: 12px;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+
+    .tag-fast { color: #6d3300; background: rgba(199, 92, 47, 0.15); }
+    .tag-medium { color: #0e4c58; background: rgba(22, 105, 122, 0.12); }
+    .tag-slow { color: #5a2140; background: rgba(124, 63, 88, 0.12); }
+
+    .meter {
+      height: 10px;
+      border-radius: 999px;
+      background: #eadfcd;
+      overflow: hidden;
+      margin-bottom: 8px;
+    }
+
+    .fill {
+      height: 100%;
+      border-radius: inherit;
+    }
+
+    .fill-ecom { background: linear-gradient(90deg, #c75c2f, #e59b51); }
+    .fill-content { background: linear-gradient(90deg, #16697a, #34a0a4); }
+    .fill-trading { background: linear-gradient(90deg, #7c3f58, #b56576); }
+    .fill-agent { background: linear-gradient(90deg, #61764b, #8ea66b); }
+    .fill-warn { background: linear-gradient(90deg, #c58b18, #d8b04a); }
+    .fill-good { background: linear-gradient(90deg, #4f772d, #90a955); }
+    .fill-bad { background: linear-gradient(90deg, #a63c3c, #d96b4f); }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    .kpi {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .kpi-card {
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: #fffdf8;
+    }
+
+    .kpi-card strong {
+      display: block;
+      font-size: 1.7rem;
+      margin-top: 8px;
+    }
+
+    .timeline {
+      position: relative;
+      display: grid;
+      gap: 16px;
+      padding-left: 20px;
+    }
+
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 6px;
+      top: 8px;
+      bottom: 8px;
+      width: 2px;
+      background: linear-gradient(180deg, var(--accent), rgba(22, 105, 122, 0.35));
+    }
+
+    .timeline-item {
+      position: relative;
+      padding-left: 22px;
+    }
+
+    .timeline-item::before {
+      content: "";
+      position: absolute;
+      left: -1px;
+      top: 8px;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--paper);
+      border: 3px solid var(--accent);
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .pill {
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: #fffdf8;
+      font-size: 0.92rem;
+    }
+
+    .footer-note {
+      margin-top: 18px;
+      padding: 14px 16px;
+      border-left: 4px solid var(--accent);
+      background: rgba(199, 92, 47, 0.08);
+      border-radius: 12px;
+    }
+
+    @media (max-width: 980px) {
+      .hero-inner,
+      .kpi {
+        grid-template-columns: 1fr;
+      }
+
+      .span-7,
+      .span-5,
+      .span-6,
+      .span-12 {
+        grid-column: span 12;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <section class="hero">
+      <div class="hero-inner">
+        <div class="hero-copy">
+          <span class="eyebrow">Agent Command Center</span>
+          <h1>Visual Monetization Map</h1>
+          <p>
+            This dashboard turns the repo plan into one picture: what is already real,
+            what is weak, where the fastest money lives, and how Claude plus ChatGPT/Codex
+            should split the work.
+          </p>
+          <div class="pill-row">
+            <span class="pill">Primary lane: Ecommerce</span>
+            <span class="pill">Focus window: 30 days</span>
+            <span class="pill">Best niche signal: Coasters + home gifts</span>
+          </div>
+        </div>
+        <div class="hero-cards">
+          <div class="mini-card">
+            <div class="mini-label">Fastest time to first signal</div>
+            <div class="mini-value">7-14 days</div>
+          </div>
+          <div class="mini-card">
+            <div class="mini-label">Repeatable small sales loop</div>
+            <div class="mini-value">2-6 weeks</div>
+          </div>
+          <div class="mini-card">
+            <div class="mini-label">Stable side-income target</div>
+            <div class="mini-value">6-12 weeks</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="grid">
+      <article class="panel span-7">
+        <h2 class="section-title">Revenue Track Rankings</h2>
+        <p class="section-note">The point is not to monetize every agent at once. The point is to use the agents to make one business work first.</p>
+        <div class="track-list">
+          <div class="track">
+            <div class="track-head">
+              <h3>Ecommerce products</h3>
+              <span class="tag tag-fast">Primary focus</span>
+            </div>
+            <div class="meter"><div class="fill fill-ecom" style="width: 65%;"></div></div>
+            <p><strong>Readiness: 65%</strong> with the fastest realistic path to money.</p>
+            <p class="muted">Evidence: Shopify exports, live product assets, Amazon campaigns, TikTok Shop setup traces.</p>
+          </div>
+          <div class="track">
+            <div class="track-head">
+              <h3>Content automation services</h3>
+              <span class="tag tag-medium">Second wave</span>
+            </div>
+            <div class="meter"><div class="fill fill-content" style="width: 40%;"></div></div>
+            <p><strong>Readiness: 40%</strong> and useful once ecommerce has proof.</p>
+            <p class="muted">Best framed later as a service or repeatable internal engine.</p>
+          </div>
+          <div class="track">
+            <div class="track-head">
+              <h3>Trading systems</h3>
+              <span class="tag tag-slow">R&amp;D only</span>
+            </div>
+            <div class="meter"><div class="fill fill-trading" style="width: 35%;"></div></div>
+            <p><strong>Readiness: 35%</strong> but slower and riskier to monetize safely.</p>
+            <p class="muted">Keep this lane alive, but do not let it steal focus from the near-term revenue loop.</p>
+          </div>
+          <div class="track">
+            <div class="track-head">
+              <h3>Selling the agent system itself</h3>
+              <span class="tag tag-slow">Later</span>
+            </div>
+            <div class="meter"><div class="fill fill-agent" style="width: 20%;"></div></div>
+            <p><strong>Readiness: 20%</strong> because proof and wins still need to exist first.</p>
+            <p class="muted">This becomes easier after your own system produces visible results.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="panel span-5">
+        <h2 class="section-title">Percent Complete Snapshot</h2>
+        <p class="section-note">These numbers come from the current repo docs and local evidence.</p>
+        <div class="kpi">
+          <div class="kpi-card">
+            <span class="mini-label">Product concept</span>
+            <strong>90%</strong>
+          </div>
+          <div class="kpi-card">
+            <span class="mini-label">Store assets</span>
+            <strong>75%</strong>
+          </div>
+          <div class="kpi-card">
+            <span class="mini-label">Marketplace testing</span>
+            <strong>70%</strong>
+          </div>
+          <div class="kpi-card">
+            <span class="mini-label">Traffic engine</span>
+            <strong>25%</strong>
+          </div>
+          <div class="kpi-card">
+            <span class="mini-label">Centralized automation</span>
+            <strong>30%</strong>
+          </div>
+          <div class="kpi-card">
+            <span class="mini-label">Repeatable profit</span>
+            <strong>15%</strong>
+          </div>
+        </div>
+        <div class="footer-note">
+          Biggest gap: you already have agents and assets. The missing piece is one disciplined conversion loop.
+        </div>
+      </article>
+
+      <article class="panel span-6">
+        <h2 class="section-title">30-Day Execution Path</h2>
+        <p class="section-note">One lane. One flagship product family. One scoreboard.</p>
+        <div class="phase-list">
+          <div class="phase">
+            <div class="phase-head">
+              <h3>Phase 1</h3>
+              <span>2-4 days</span>
+            </div>
+            <p><strong>Focus and cleanup.</strong> Pick the flagship SKU family, cut weak variants, and standardize the offer.</p>
+          </div>
+          <div class="phase">
+            <div class="phase-head">
+              <h3>Phase 2</h3>
+              <span>3-7 days</span>
+            </div>
+            <p><strong>Content engine.</strong> Build 20-30 hooks and post daily using AI-generated scripts, captions, and shot plans.</p>
+          </div>
+          <div class="phase">
+            <div class="phase-head">
+              <h3>Phase 3</h3>
+              <span>7-14 days</span>
+            </div>
+            <p><strong>Conversion loop.</strong> Tighten the product page around the best-performing angle and route traffic to one clean offer.</p>
+          </div>
+          <div class="phase">
+            <div class="phase-head">
+              <h3>Phase 4</h3>
+              <span>7-21 days</span>
+            </div>
+            <p><strong>Paid validation.</strong> Resume only the tightest campaigns with hard stop-loss rules.</p>
+          </div>
+          <div class="phase">
+            <div class="phase-head">
+              <h3>Phase 5</h3>
+              <span>Week 4+</span>
+            </div>
+            <p><strong>Scale or kill.</strong> Expand only if the unit economics are real. Otherwise cut fast and retest the system on the next niche.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="panel span-6">
+        <h2 class="section-title">Who Does What</h2>
+        <p class="section-note">The agents should not overlap randomly. They should hand work off cleanly.</p>
+        <div class="role-list">
+          <div class="role">
+            <h3>Claude</h3>
+            <p>Planning, issue drafting, market framing, workflow design, and experiment logic.</p>
+          </div>
+          <div class="role">
+            <h3>ChatGPT / Codex</h3>
+            <p>Repo edits, automation scripts, templates, dashboards, issue-to-PR execution, and implementation detail.</p>
+          </div>
+          <div class="role">
+            <h3>Gemini</h3>
+            <p>Alternative ideation, second-opinion research, and comparison passes.</p>
+          </div>
+          <div class="role">
+            <h3>Browser automation tools</h3>
+            <p>Store setup, listing QA, repetitive site workflows, and operational checks.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="panel span-12">
+        <h2 class="section-title">Monetization Timeline</h2>
+        <p class="section-note">These are realistic windows if the next 30 days stay focused on ecommerce plus content.</p>
+        <div class="timeline">
+          <div class="timeline-item">
+            <h3>7-14 days</h3>
+            <p>First validated signal: clicks, engagement, and early sales evidence around one focused offer.</p>
+          </div>
+          <div class="timeline-item">
+            <h3>2-6 weeks</h3>
+            <p>First small repeatable sales loop with cleaner content-to-offer conversion.</p>
+          </div>
+          <div class="timeline-item">
+            <h3>6-12 weeks</h3>
+            <p>Possible stable side-income system if margins, content cadence, and traffic discipline hold.</p>
+          </div>
+          <div class="timeline-item">
+            <h3>After proof exists</h3>
+            <p>Only then does it make sense to seriously package and sell the broader agent operating system.</p>
+          </div>
+        </div>
+        <div class="footer-note">
+          Working rule: if attention splits across every idea at once, this timeline usually doubles or breaks.
+        </div>
+      </article>
+    </section>
+  </main>
+</body>
+</html>

@@ -29,6 +29,13 @@ Agreed shared TikTok Shop truth:
   4. verify `CJ -> Shopify -> Optima -> TikTok`
   5. keep AI video pipeline moving on current live products
 
+Permanent prompt and realism plan now live in:
+
+- `tiktok-shop/reports/TIKTOK_100_PROMPT.md`
+- `tiktok-shop/reports/AI_VIDEO_PIPELINE_READY.md`
+
+`video 2015` was checked on 2026-04-21 and was NOT FOUND in the shared repo.
+
 ## ONE REPO FROM NOW ON
 Both Claude and Codex write here. Old `TikTok Shop Business 1\` is retired.
 GitHub: https://github.com/Edward577/ed-empire-command

@@ -27,6 +27,13 @@ Agreed shared TikTok Shop truth:
   3. push replacement queue through `CJ -> Shopify -> Optima -> TikTok`
   4. keep AI video pipeline on current live products
 
+Permanent prompt and realism plan now live in:
+
+- `tiktok-shop/reports/TIKTOK_100_PROMPT.md`
+- `tiktok-shop/reports/AI_VIDEO_PIPELINE_READY.md`
+
+`video 2015` was checked on 2026-04-21 and was NOT FOUND in the shared repo.
+
 Codex is primary.
 
 Claude / Cloud Code should:

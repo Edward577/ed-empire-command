@@ -40,6 +40,14 @@
 - Each listing has: keyword-rich title, hook description, full benefit-led copy, correct category path, recommended price
 - Ready to paste directly into TikTok Seller Center — no rewriting needed
 
+## Prompt And AI Video Readiness
+
+- **Permanent prompt:** `tiktok-shop/reports/TIKTOK_100_PROMPT.md`
+- **AI realism plan:** `tiktok-shop/reports/AI_VIDEO_PIPELINE_READY.md`
+- `video 2015` check: completed on 2026-04-21 — NOT FOUND in shared repo
+- Current best visual direction: realistic creator-style product videos, not sterile catalog AI
+- Current AI lane: ready to keep generating clips for current live products without waiting on the blocked old queue
+
 ## What is left
 
 1. ~~Keep optimizing the current live TikTok listings first~~ ✅ DONE — copy is in `tiktok-shop/listings/optimized_listings.md`

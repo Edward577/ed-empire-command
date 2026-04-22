@@ -50,10 +50,16 @@ Ed wants realistic TikTok-native fashion videos. NOT slideshows. NOT FFmpeg zoom
 - Fresh correction from screenshot truth:
   - `Projects/tiktok_shop/exports/v14_3piece_crop_shorts_lounge_v3_img.jpg`
   - corrected product truth = white fuzzy cami top, matching cardigan + shorts, visible white rope drawstring
+- Fresh motion correction from TikTok reference check on 2026-04-22:
+  - reference link checked: `https://www.tiktok.com/@thymetravelerswife/video/7626516407651421454`
+  - reference style = full-body room shot, phone-to-face creator framing, visible restrained motion
+  - old frozen-motion Veo prompt removed from `Projects/tiktok_shop/bots/veo_v14_dress_pipeline.py`
+  - fresh corrected output: `Projects/tiktok_shop/exports/v14_3piece_crop_shorts_lounge_v3_final.mp4`
+  - fresh raw motion clip: `Projects/tiktok_shop/exports/v14_3piece_crop_shorts_lounge_v3_veo.mp4`
 - Exact-match note:
   - current bikini outputs are usable style matches
   - exact 1:1 garment fidelity still needs the original seller/CJ product image pack or a garment-preserving try-on path like CatVTON / MagicTryOn / Vanast
-  - corrected 3-piece loungewear still is closer to the seller listing, but the fresh Veo motion pass was blocked by `429 RESOURCE_EXHAUSTED`
+  - corrected 3-piece loungewear now has both a closer still and a fresh motion pass, but exact garment fidelity can still improve if the original seller image pack is pulled
 
 Codex is primary.
 

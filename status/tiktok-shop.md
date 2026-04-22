@@ -66,6 +66,11 @@
 - **Fresh catalog batch tag:** `homey_curvy_0422`
 - **Fresh batch successes:** `v14_satin_vneck_bodycon_homey_curvy_0422_final.mp4`, `v14_floral_chiffon_maxi_homey_curvy_0422_final.mp4`, `v14_linen_midi_wrap_homey_curvy_0422_final.mp4`, `v14_butter_soft_lounge_set_homey_curvy_0422_final.mp4`, `v14_satin_ruched_slip_midi_homey_curvy_0422_final.mp4`, `v14_3piece_crop_shorts_lounge_v3_homey_curvy_0422_final.mp4`
 - **Current blocker on full batch:** `v14_threepiece_coverup_bikini_v3_homey_curvy_0422` stopped at Veo `429 RESOURCE_EXHAUSTED`; the fresh still exists but the fresh MP4 does not yet
+- **Fresh no-text product-folder batch on 2026-04-22:** all previous generated media in `Projects/tiktok_shop/exports` and `videos/output` was deleted, then a new generator was run for five race variants per product with no text overlays
+- **New generator:** `Projects/tiktok_shop/bots/veo_v15_product_folders.py`
+- **New output structure:** `Projects/tiktok_shop/exports/<product-slug>/<race>.mp4`
+- **Current no-text batch result:** `18` finished videos and `17` quota-blocked variants
+- **Current finished coverage:** `linen_midi_wrap` 5/5, `floral_chiffon_maxi` 4/5, `butter_soft_lounge_set` 4/5, `satin_vneck_bodycon` 3/5, `satin_ruched_slip_midi` 2/5, `3piece_crop_shorts_lounge_v3` 0/5 videos with 5 stills ready, `threepiece_coverup_bikini_v3` 0/5 videos with 5 stills ready
 
 ## What is left
 

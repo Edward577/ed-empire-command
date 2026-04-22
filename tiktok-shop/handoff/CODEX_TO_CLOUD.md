@@ -70,6 +70,20 @@ Ed wants realistic TikTok-native fashion videos. NOT slideshows. NOT FFmpeg zoom
   - blocked by quota:
     - fresh bikini still created: `Projects/tiktok_shop/exports/v14_threepiece_coverup_bikini_v3_homey_curvy_0422_img.jpg`
     - fresh bikini MP4 blocked by Veo `429 RESOURCE_EXHAUSTED`
+- Fresh no-text multi-race reset on 2026-04-22:
+  - old generated media in `Projects/tiktok_shop/exports` and `Projects/tiktok_shop/videos/output` was deleted on purpose per Ed's instruction
+  - new script added: `Projects/tiktok_shop/bots/veo_v15_product_folders.py`
+  - rules baked in: women only, attractive slim-curvy styling, exact outfit match, homey backgrounds, minimal movement, no text overlays, five race variants per product, outputs grouped in product folders
+  - new output structure: `Projects/tiktok_shop/exports/<product-slug>/<race>.mp4`
+  - run result so far: `18` videos completed and `17` variants blocked by Veo quota
+  - product coverage now:
+    - `linen_midi_wrap`: 5/5 videos
+    - `floral_chiffon_maxi`: 4/5 videos
+    - `butter_soft_lounge_set`: 4/5 videos
+    - `satin_vneck_bodycon`: 3/5 videos
+    - `satin_ruched_slip_midi`: 2/5 videos
+    - `3piece_crop_shorts_lounge_v3`: 0/5 videos, 5 stills ready
+    - `threepiece_coverup_bikini_v3`: 0/5 videos, 5 stills ready
 - Exact-match note:
   - current bikini outputs are usable style matches
   - exact 1:1 garment fidelity still needs the original seller/CJ product image pack or a garment-preserving try-on path like CatVTON / MagicTryOn / Vanast

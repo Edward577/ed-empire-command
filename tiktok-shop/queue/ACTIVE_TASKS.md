@@ -15,6 +15,7 @@
 - `[done] Codex | Loungewear accuracy pass | Corrected the 3-piece lounge prompt from seller screenshot truth and generated a closer still with white contrast cami + rope drawstring | 2026-04-22 | output: Projects/tiktok_shop/exports/v14_3piece_crop_shorts_lounge_v3_img.jpg`
 - `[done] Codex | Loungewear motion retry | Checked new TikTok reference movement, removed the frozen-motion Veo prompt, and generated a fresh creator-motion MP4 from the corrected still | 2026-04-22 | outputs: Projects/tiktok_shop/exports/v14_3piece_crop_shorts_lounge_v3_veo.mp4 + v14_3piece_crop_shorts_lounge_v3_final.mp4`
 - `[done] Codex | Catalog homey-curvy batch | Upgraded the generator to self-check outfit accuracy + curvy styling + homey backgrounds and rendered 6 fresh catalog MP4s under tag homey_curvy_0422 | 2026-04-22 | outputs: Projects/tiktok_shop/exports/v14_*_homey_curvy_0422_final.mp4`
+- `[done] Codex | No-text product-folder reset | Deleted prior generated media and started a fresh five-race-per-product batch with no text overlays and product-folder outputs | 2026-04-22 | script: Projects/tiktok_shop/bots/veo_v15_product_folders.py`
 
 ## BLOCKED — waiting on Ed
 
@@ -27,6 +28,7 @@
 - `[todo] Codex | Loungewear refinement pass | Compare the fresh v3 motion clip against the seller media and tighten framing / garment fidelity if needed | none | target outputs: v14_3piece_crop_shorts_lounge_v3_final.mp4 + seller screenshot`
 - `[todo] Codex | Exact garment match | Pull the original CJ / TikTok seller image pack for the bikini set so the next pass can target true 1:1 garment fidelity instead of prompt-only matching | blocked only by source image availability | strongest future path: garment-preserving try-on`
 - `[todo] Codex | Bikini homey-curvy rerun | Re-run `v14_threepiece_coverup_bikini_v3_homey_curvy_0422` through Veo after quota resets so the fresh still becomes a matching MP4 | blocked by current Veo quota | source still already exists`
+- `[todo] Codex | Finish no-text multi-race batch | Re-run the remaining 17 quota-blocked race/product variants in `Projects/tiktok_shop/exports/<product-slug>/` after Veo quota resets | blocked by current Veo quota | 18 videos already complete`
 - `[todo] Both | Dashboard | Keep dashboard.html updated with real TikTok state after each major step | none | ed-empire-command/dashboard.html`
 
 ## Rules

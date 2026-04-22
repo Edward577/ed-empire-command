@@ -45,6 +45,11 @@ Ed wants realistic TikTok-native fashion videos. NOT slideshows. NOT FFmpeg zoom
 - Fresh output from this sync:
   - `Projects/tiktok_shop/exports/v14_satin_vneck_bodycon_img.jpg`
   - `Projects/tiktok_shop/exports/v14_satin_vneck_bodycon_final.mp4`
+  - `Projects/tiktok_shop/exports/v14_threepiece_coverup_bikini_final.mp4`
+  - `Projects/tiktok_shop/exports/v14_threepiece_coverup_bikini_v3_final.mp4`
+- Exact-match note:
+  - current bikini outputs are usable style matches
+  - exact 1:1 garment fidelity still needs the original seller/CJ product image pack or a garment-preserving try-on path like CatVTON / MagicTryOn / Vanast
 
 Codex is primary.
 

@@ -49,11 +49,13 @@
 - **Existing real MP4 outputs:** `Projects/tiktok_shop/exports/` — model_veo_latina_v1.mp4, kling_slim_veo_v2.mp4, pajama_set_tiktok_v3.mp4
 - **Fresh output from this sync:** `Projects/tiktok_shop/exports/v14_satin_vneck_bodycon_final.mp4`
 - **Fresh reference still from this sync:** `Projects/tiktok_shop/exports/v14_satin_vneck_bodycon_img.jpg`
+- **Bikini set outputs from this sync:** `Projects/tiktok_shop/exports/v14_threepiece_coverup_bikini_final.mp4`, `v14_threepiece_coverup_bikini_v3_final.mp4`
 - **Reference video style:** Mirror selfie, bedroom background, warm lamp light, barely-breathes 8s, phone-covers-face mystery angle
 - **GitHub research:** `tiktok-shop/reports/VIDEO_PIPELINE_RESEARCH.md`
 - **GitHub tooling note:** `tiktok-shop/reports/GITHUB_VIDEO_TOOLING_RESEARCH.md`
 - **`video 2015`:** NOT FOUND — checked entire repo and workspace (Apr 21)
 - **Upgrade path when ready:** Kling 3.0 API (better fabric physics) — details in research notes
+- **Exact-match blocker:** we still do not have the original CJ / TikTok seller image pack locally for the bikini set, so the current workflow can get close on look and vibe but can still drift on exact garment cut
 
 ## What is left
 

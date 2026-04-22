@@ -56,6 +56,20 @@ Ed wants realistic TikTok-native fashion videos. NOT slideshows. NOT FFmpeg zoom
   - old frozen-motion Veo prompt removed from `Projects/tiktok_shop/bots/veo_v14_dress_pipeline.py`
   - fresh corrected output: `Projects/tiktok_shop/exports/v14_3piece_crop_shorts_lounge_v3_final.mp4`
   - fresh raw motion clip: `Projects/tiktok_shop/exports/v14_3piece_crop_shorts_lounge_v3_veo.mp4`
+- Fresh catalog batch on 2026-04-22:
+  - generator upgraded to self-check exact outfit detail, curvy model styling, and homey real-room backgrounds
+  - rerun mode added via `--force` and `--tag`
+  - batch tag used: `homey_curvy_0422`
+  - successful fresh outputs:
+    - `Projects/tiktok_shop/exports/v14_satin_vneck_bodycon_homey_curvy_0422_final.mp4`
+    - `Projects/tiktok_shop/exports/v14_floral_chiffon_maxi_homey_curvy_0422_final.mp4`
+    - `Projects/tiktok_shop/exports/v14_linen_midi_wrap_homey_curvy_0422_final.mp4`
+    - `Projects/tiktok_shop/exports/v14_butter_soft_lounge_set_homey_curvy_0422_final.mp4`
+    - `Projects/tiktok_shop/exports/v14_satin_ruched_slip_midi_homey_curvy_0422_final.mp4`
+    - `Projects/tiktok_shop/exports/v14_3piece_crop_shorts_lounge_v3_homey_curvy_0422_final.mp4`
+  - blocked by quota:
+    - fresh bikini still created: `Projects/tiktok_shop/exports/v14_threepiece_coverup_bikini_v3_homey_curvy_0422_img.jpg`
+    - fresh bikini MP4 blocked by Veo `429 RESOURCE_EXHAUSTED`
 - Exact-match note:
   - current bikini outputs are usable style matches
   - exact 1:1 garment fidelity still needs the original seller/CJ product image pack or a garment-preserving try-on path like CatVTON / MagicTryOn / Vanast

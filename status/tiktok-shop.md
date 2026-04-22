@@ -62,6 +62,10 @@
 - **Motion prompt fix on 2026-04-22:** replaced the old "living photograph / frozen" Veo prompt with a restrained creator-motion prompt
 - **Fresh corrected loungewear MP4:** `Projects/tiktok_shop/exports/v14_3piece_crop_shorts_lounge_v3_final.mp4`
 - **Fresh corrected loungewear raw Veo clip:** `Projects/tiktok_shop/exports/v14_3piece_crop_shorts_lounge_v3_veo.mp4`
+- **Catalog refresh on 2026-04-22:** generator updated to self-check exact outfit match, curvy model styling, and more homey backgrounds before rendering
+- **Fresh catalog batch tag:** `homey_curvy_0422`
+- **Fresh batch successes:** `v14_satin_vneck_bodycon_homey_curvy_0422_final.mp4`, `v14_floral_chiffon_maxi_homey_curvy_0422_final.mp4`, `v14_linen_midi_wrap_homey_curvy_0422_final.mp4`, `v14_butter_soft_lounge_set_homey_curvy_0422_final.mp4`, `v14_satin_ruched_slip_midi_homey_curvy_0422_final.mp4`, `v14_3piece_crop_shorts_lounge_v3_homey_curvy_0422_final.mp4`
+- **Current blocker on full batch:** `v14_threepiece_coverup_bikini_v3_homey_curvy_0422` stopped at Veo `429 RESOURCE_EXHAUSTED`; the fresh still exists but the fresh MP4 does not yet
 
 ## What is left
 

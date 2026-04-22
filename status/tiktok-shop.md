@@ -47,8 +47,11 @@
 - **DO NOT USE:** `run_product_videos.py` → this runs the FFmpeg slideshow fallback (catalog image + text = NOT what Ed wants)
 - **USE THIS:** `python veo_v14_dress_pipeline.py` (covers 6 products, diverse models, mirror-selfie style)
 - **Existing real MP4 outputs:** `Projects/tiktok_shop/exports/` — model_veo_latina_v1.mp4, kling_slim_veo_v2.mp4, pajama_set_tiktok_v3.mp4
+- **Fresh output from this sync:** `Projects/tiktok_shop/exports/v14_satin_vneck_bodycon_final.mp4`
+- **Fresh reference still from this sync:** `Projects/tiktok_shop/exports/v14_satin_vneck_bodycon_img.jpg`
 - **Reference video style:** Mirror selfie, bedroom background, warm lamp light, barely-breathes 8s, phone-covers-face mystery angle
 - **GitHub research:** `tiktok-shop/reports/VIDEO_PIPELINE_RESEARCH.md`
+- **GitHub tooling note:** `tiktok-shop/reports/GITHUB_VIDEO_TOOLING_RESEARCH.md`
 - **`video 2015`:** NOT FOUND — checked entire repo and workspace (Apr 21)
 - **Upgrade path when ready:** Kling 3.0 API (better fabric physics) — details in research notes
 

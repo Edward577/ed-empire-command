@@ -9,6 +9,8 @@
 - `[done] Claude + Codex | AI video pipeline | 5 MP4 videos rendered successfully at 22:24 2026-04-20 | see Projects/tiktok_shop/videos/output/ — 5 confirmed successes`
 - `[done] Both | video 2015 | Searched entire repo and workspace — NOT FOUND | 2026-04-21 | recorded here and in SHARED_UNDERSTANDING.md`
 - `[done] Claude | TikTok content queue | Packaged a posting-ready creator-style queue for the live dress lane | 2026-04-21 | see tiktok-shop/reports/POSTING_QUEUE_READY.md`
+- `[done] Codex | Video tooling research | Logged stronger realism / try-on / image-to-video options and synced the still-first production choice | 2026-04-21 | see tiktok-shop/reports/VIDEO_PIPELINE_RESEARCH.md + GITHUB_VIDEO_TOOLING_RESEARCH.md`
+- `[done] Codex | Realistic creator video | Generated Satin V-Neck Bodycon Dress still + MP4 through the unified Imagen -> Veo pipeline | 2026-04-21 | outputs: Projects/tiktok_shop/exports/v14_satin_vneck_bodycon_img.jpg + v14_satin_vneck_bodycon_final.mp4`
 
 ## BLOCKED — waiting on Ed
 
@@ -17,7 +19,7 @@
 
 ## TODO (unblocked — can start now)
 
-- `[todo] Both | AI video pipeline | Run tiktok_video_gen.py against current 6 active TikTok product set (align video products to what's actually live in Seller Center) | none | see video pipeline plan in SHARED_UNDERSTANDING.md`
+- `[todo] Both | AI video pipeline | Run veo_v14_dress_pipeline.py against the current live TikTok product set and keep using the Imagen -> Veo path instead of the slideshow fallback | none | see tiktok-shop/reports/VIDEO_PIPELINE_RESEARCH.md`
 - `[todo] Both | Dashboard | Keep dashboard.html updated with real TikTok state after each major step | none | ed-empire-command/dashboard.html`
 
 ## Rules

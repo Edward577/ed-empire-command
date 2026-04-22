@@ -8,35 +8,43 @@
   - `queue\ACTIVE_TASKS.md`
 - Do not answer from stale single-file status if the handoff and queue files contain fresher truth.
 
-## Latest prompt sync
+## Latest prompt sync — 2026-04-21 (full cross-check)
 
-Ed wants one cohesive answer and then the HTML view.
+Ed wants realistic TikTok-native fashion videos. NOT slideshows. NOT FFmpeg zoom-pan on white-background catalog images.
 
-Agreed shared TikTok Shop truth:
+### Video pipeline truth (CONFIRMED)
+- The REAL pipeline is: **Google Imagen 4.0 -> Veo 2.0** (already working since Apr 20)
+- Existing proven script: `Projects/tiktok_shop/bots/veo_v13_black_mystery.py`
+- Existing unified script: `Projects/tiktok_shop/bots/veo_v14_dress_pipeline.py`
+- Real MP4s already in: `Projects/tiktok_shop/exports/`
+- The `run_product_videos.py` fallback (FFmpeg slideshow) is WRONG and should NOT be used for posting
+- Supporting research notes now live in:
+  - `tiktok-shop/reports/VIDEO_PIPELINE_RESEARCH.md`
+  - `tiktok-shop/reports/GITHUB_VIDEO_TOOLING_RESEARCH.md`
 
-- Shopify connected
-- CJ connected
-- Optima connected
-- Seller Center recoverable but unstable
+### TikTok reference video style (`https://www.tiktok.com/t/ZTk9vewgP/`)
+- BLOCKED — redirects to TikTok login, no content accessible
+- Shared inferred target:
+  - real-looking woman wearing the outfit
+  - believable apartment / bedroom / hallway / hotel background
+  - subtle creator-style motion
+  - no slideshow energy
+  - no empty product-only background
+
+### Shared truth (all files checked, no disagreements remaining)
+- Shopify: LIVE
+- CJ: LIVE (browser path)
+- Optima Connector: LIVE
+- Seller Center: UNSTABLE — Ed must log in manually
 - `Active 6 | Reviewing 2 | Needs attention 7`
-- Original 5-item add queue blocked in CJ
-- Replacement queue is the current sourcing path
-- Shared next move:
-  1. optimize current live TikTok listings
-  2. stabilize session/browser path
-  3. push replacement queue through `CJ -> Shopify -> Optima -> TikTok`
-  4. keep AI video pipeline on current live products
-
-Permanent prompt and realism plan now live in:
-
-- `tiktok-shop/reports/TIKTOK_100_PROMPT.md`
-- `tiktok-shop/reports/AI_VIDEO_PIPELINE_READY.md`
-- `tiktok-shop/reports/POSTING_QUEUE_READY.md`
-- `tiktok-shop/reports/TIKTOK_OFFICIAL_RESEARCH.md`
-
-`video 2015` was checked on 2026-04-21 and was NOT FOUND in the shared repo.
-
-Posting-ready creator-style queue now exists for the live dress lane, so content can keep moving without waiting on the blocked old queue.
+- Listing optimization: DONE -> `tiktok-shop/listings/optimized_listings.md`
+- Replacement queue: staged -> `NEXT_ADD_QUEUE.md` (4 products)
+- Blocked original queue: 5 items, NOT in CJ, do not retry
+- `video 2015`: checked and NOT FOUND anywhere in repo or workspace
+- Preferred content path: real-person still -> subtle motion -> light CTA overlay
+- Fresh output from this sync:
+  - `Projects/tiktok_shop/exports/v14_satin_vneck_bodycon_img.jpg`
+  - `Projects/tiktok_shop/exports/v14_satin_vneck_bodycon_final.mp4`
 
 Codex is primary.
 

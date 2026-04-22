@@ -12,6 +12,7 @@
 - `[done] Codex | Video tooling research | Logged stronger realism / try-on / image-to-video options and synced the still-first production choice | 2026-04-21 | see tiktok-shop/reports/VIDEO_PIPELINE_RESEARCH.md + GITHUB_VIDEO_TOOLING_RESEARCH.md`
 - `[done] Codex | Realistic creator video | Generated Satin V-Neck Bodycon Dress still + MP4 through the unified Imagen -> Veo pipeline | 2026-04-21 | outputs: Projects/tiktok_shop/exports/v14_satin_vneck_bodycon_img.jpg + v14_satin_vneck_bodycon_final.mp4`
 - `[done] Codex | Bikini refinement pass | Generated 3-piece cover-up bikini set variants and tightened motion/product-match constraints | 2026-04-21 | outputs: Projects/tiktok_shop/exports/v14_threepiece_coverup_bikini_final.mp4 + v14_threepiece_coverup_bikini_v3_final.mp4`
+- `[done] Codex | Loungewear accuracy pass | Corrected the 3-piece lounge prompt from seller screenshot truth and generated a closer still with white contrast cami + rope drawstring | 2026-04-22 | output: Projects/tiktok_shop/exports/v14_3piece_crop_shorts_lounge_v3_img.jpg`
 
 ## BLOCKED — waiting on Ed
 
@@ -21,6 +22,7 @@
 ## TODO (unblocked — can start now)
 
 - `[todo] Both | AI video pipeline | Run veo_v14_dress_pipeline.py against the current live TikTok product set and keep using the Imagen -> Veo path instead of the slideshow fallback | none | see tiktok-shop/reports/VIDEO_PIPELINE_RESEARCH.md`
+- `[todo] Codex | Loungewear motion retry | Re-run the corrected 3-piece loungewear still through Veo once quota resets or another video path is available | blocked by current Gemini/Veo quota | target source still: v14_3piece_crop_shorts_lounge_v3_img.jpg`
 - `[todo] Codex | Exact garment match | Pull the original CJ / TikTok seller image pack for the bikini set so the next pass can target true 1:1 garment fidelity instead of prompt-only matching | blocked only by source image availability | strongest future path: garment-preserving try-on`
 - `[todo] Both | Dashboard | Keep dashboard.html updated with real TikTok state after each major step | none | ed-empire-command/dashboard.html`
 

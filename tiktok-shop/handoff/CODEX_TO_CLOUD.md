@@ -47,9 +47,13 @@ Ed wants realistic TikTok-native fashion videos. NOT slideshows. NOT FFmpeg zoom
   - `Projects/tiktok_shop/exports/v14_satin_vneck_bodycon_final.mp4`
   - `Projects/tiktok_shop/exports/v14_threepiece_coverup_bikini_final.mp4`
   - `Projects/tiktok_shop/exports/v14_threepiece_coverup_bikini_v3_final.mp4`
+- Fresh correction from screenshot truth:
+  - `Projects/tiktok_shop/exports/v14_3piece_crop_shorts_lounge_v3_img.jpg`
+  - corrected product truth = white fuzzy cami top, matching cardigan + shorts, visible white rope drawstring
 - Exact-match note:
   - current bikini outputs are usable style matches
   - exact 1:1 garment fidelity still needs the original seller/CJ product image pack or a garment-preserving try-on path like CatVTON / MagicTryOn / Vanast
+  - corrected 3-piece loungewear still is closer to the seller listing, but the fresh Veo motion pass was blocked by `429 RESOURCE_EXHAUSTED`
 
 Codex is primary.
 

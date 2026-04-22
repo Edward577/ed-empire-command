@@ -7,8 +7,9 @@
 - Products verified in Shopify: 4 confirmed in the short status path
 - TikTok Seller Center: RECOVERABLE BUT UNSTABLE
 - TikTok Shop counts: Active 6 | Reviewing 2 | Needs attention 7
-- TikTok Shop listing optimization: READY NOW on the current live products
-- Product videos: PIPELINE WORKING for the current live batch
+- TikTok Shop listing optimization: ✅ DONE — `tiktok-shop/listings/optimized_listings.md`
+- Product videos: ✅ REAL PIPELINE WORKING — Imagen 4.0 → Veo 2.0 (NOT the slideshow fallback)
+- Video pipeline script: `Projects/tiktok_shop/bots/veo_v14_dress_pipeline.py` (new unified script)
 - Revenue: $0 (pre-launch)
 
 ## Honest blocker truth
@@ -40,16 +41,16 @@
 - Each listing has: keyword-rich title, hook description, full benefit-led copy, correct category path, recommended price
 - Ready to paste directly into TikTok Seller Center — no rewriting needed
 
-## Prompt And AI Video Readiness
+## AI Video Pipeline Truth (2026-04-21)
 
-- **Permanent prompt:** `tiktok-shop/reports/TIKTOK_100_PROMPT.md`
-- **AI realism plan:** `tiktok-shop/reports/AI_VIDEO_PIPELINE_READY.md`
-- **Posting queue:** `tiktok-shop/reports/POSTING_QUEUE_READY.md`
-- **Official research notes:** `tiktok-shop/reports/TIKTOK_OFFICIAL_RESEARCH.md`
-- `video 2015` check: completed on 2026-04-21 — NOT FOUND in shared repo
-- Current best visual direction: realistic creator-style product videos, not sterile catalog AI
-- Current AI lane: ready to keep generating clips for current live products without waiting on the blocked old queue
-- Current content lane: ready to post 5 creator-style videos/day from the current live dress products
+- **Real pipeline:** Google Imagen 4.0 → Veo 2.0 (confirmed working since Apr 20)
+- **DO NOT USE:** `run_product_videos.py` → this runs the FFmpeg slideshow fallback (catalog image + text = NOT what Ed wants)
+- **USE THIS:** `python veo_v14_dress_pipeline.py` (covers 6 products, diverse models, mirror-selfie style)
+- **Existing real MP4 outputs:** `Projects/tiktok_shop/exports/` — model_veo_latina_v1.mp4, kling_slim_veo_v2.mp4, pajama_set_tiktok_v3.mp4
+- **Reference video style:** Mirror selfie, bedroom background, warm lamp light, barely-breathes 8s, phone-covers-face mystery angle
+- **GitHub research:** `tiktok-shop/reports/VIDEO_PIPELINE_RESEARCH.md`
+- **`video 2015`:** NOT FOUND — checked entire repo and workspace (Apr 21)
+- **Upgrade path when ready:** Kling 3.0 API (better fabric physics) — details in research notes
 
 ## What is left
 
